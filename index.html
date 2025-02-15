@@ -24,10 +24,6 @@
       padding: 20px;
       padding-bottom: 40px; /* extra bottom padding */
     }
-    /* Mobile container to wrap all content */
-    #mobileContainer {
-      /* On larger screens, this can simply wrap content normally */
-    }
     /* Contract Address Container */
     #contractAddress {
       background: rgba(255, 255, 255, 0.9);
@@ -106,7 +102,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* For gallery, load a static preview frame */
+      /* Load a static preview (one frame) */
       preload: metadata;
       playsinline;
       webkit-playsinline;
@@ -132,91 +128,69 @@
     }
     /* Mobile adjustments */
     @media (max-width: 600px) {
-      /* Wrap all content in a container that fills the viewport */
-      #mobileContainer {
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-      }
-      /* Let the top sections take minimal space */
-      #contractAddress,
-      header,
-      #gallery,
-      #footer {
-        flex: 0 1 auto;
-      }
-      /* The video container will expand to fill remaining space */
+      /* Keep the container size as-is */
       #container {
-        flex: 1 1 auto;
-        max-width: 90vw;
+        max-width: 500px;
       }
-      /* Disable interactions on the main video */
-      #container video {
-        pointer-events: none;
-      }
-      /* Adjust gallery thumbnails */
+      /* Let gallery thumbnails be horizontally scrollable if needed */
       #gallery {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+        overflow-x: auto;
+        white-space: nowrap;
+        justify-content: flex-start;
         padding: 0 10px;
       }
       .thumb {
-        width: 40vw;
-        height: auto;
+        display: inline-block;
       }
     }
   </style>
 </head>
 <body>
-  <div id="mobileContainer">
-    <!-- Contract Address -->
-    <div id="contractAddress">
-      Contract Address: coming soon
-    </div>
-    <br>
-    <!-- Header with Toggle Button -->
-    <header id="bagToggle">Remove the bag</header>
+  <!-- Contract Address -->
+  <div id="contractAddress">
+    Contract Address: coming soon
+  </div>
+  <br>
+  <!-- Header with Toggle Button -->
+  <header id="bagToggle">Remove the bag</header>
 
-    <!-- Video Container -->
-    <div id="container">
-      <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture>
-        <source src="1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <canvas id="overlayCanvas"></canvas>
-    </div>
+  <!-- Video Container -->
+  <div id="container">
+    <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture>
+      <source src="1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <canvas id="overlayCanvas"></canvas>
+  </div>
 
-    <!-- Video Gallery -->
-    <div id="gallery">
-      <div class="thumb active" data-video="1.mp4">
-        <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="2.mp4">
-        <video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="3.mp4">
-        <video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="4.mp4">
-        <video src="4.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="5.mp4">
-        <video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="6.mp4">
-        <video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
-      <div class="thumb" data-video="7.mp4">
-        <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
-      </div>
+  <!-- Video Gallery -->
+  <div id="gallery">
+    <div class="thumb active" data-video="1.mp4">
+      <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
-    
-    <!-- Footer with OnlyFans Button -->
-    <div id="footer">
-      <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="onlyfans-btn">Cindy OF</a>
+    <div class="thumb" data-video="2.mp4">
+      <video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
+    <div class="thumb" data-video="3.mp4">
+      <video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+    <div class="thumb" data-video="4.mp4">
+      <video src="4.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+    <div class="thumb" data-video="5.mp4">
+      <video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+    <div class="thumb" data-video="6.mp4">
+      <video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+    <div class="thumb" data-video="7.mp4">
+      <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
+    </div>
+  </div>
+  
+  <!-- Footer with OnlyFans Button -->
+  <div id="footer">
+    <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="onlyfans-btn">Cindy OF</a>
   </div>
 
   <!-- Load MediaPipe Face Mesh and Drawing Utilities -->
