@@ -49,7 +49,7 @@
       background: rgba(255, 255, 255, 1);
       transform: scale(1.05);
     }
-    /* Video Container */
+    /* Container with max-width reduced to 500px and extra bottom margin */
     #container {
       position: relative;
       margin: 0 auto 20px auto;
@@ -129,7 +129,7 @@
   </div>
   <br>
   <!-- Header with Toggle Button -->
-  <header id="bagToggle">Use the bag</header>
+  <header id="bagToggle">Remove the bag</header>
 
   <!-- Video Container -->
   <div id="container">
@@ -184,8 +184,8 @@
       const bagImage = new Image();
       bagImage.src = 'bag.png';
 
-      // Global toggle for bag overlay (default: false = no overlay).
-      let useBag = false;
+      // Global toggle for bag overlay (default: true = overlay on).
+      let useBag = true;
       function updateHeader() {
         bagToggle.textContent = useBag ? "Remove the bag" : "Use the bag";
       }
