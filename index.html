@@ -102,6 +102,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      /* Static preview: load metadata only so it shows one frame */
+      preload: metadata;
     }
     /* Footer OnlyFans Button */
     #footer {
@@ -127,14 +129,13 @@
       #container {
         max-width: 90vw;
       }
+      /* Let gallery thumbnails wrap naturally */
       #gallery {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
-        padding: 0 10px;
       }
       .thumb {
-        flex: 0 0 auto;
         width: 40vw;
         height: auto;
       }
@@ -162,25 +163,26 @@
   <!-- Video Gallery -->
   <div id="gallery">
     <div class="thumb active" data-video="1.mp4">
-      <video src="1.mp4" muted loop></video>
+      <!-- Static preview: remove autoplay and loop -->
+      <video src="1.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="2.mp4">
-      <video src="2.mp4" muted loop></video>
+      <video src="2.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="3.mp4">
-      <video src="3.mp4" muted loop></video>
+      <video src="3.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="4.mp4">
-      <video src="4.mp4" muted loop></video>
+      <video src="4.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="5.mp4">
-      <video src="5.mp4" muted loop></video>
+      <video src="5.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="6.mp4">
-      <video src="6.mp4" muted loop></video>
+      <video src="6.mp4" muted preload="metadata"></video>
     </div>
     <div class="thumb" data-video="7.mp4">
-      <video src="7.mp4" muted loop></video>
+      <video src="7.mp4" muted preload="metadata"></video>
     </div>
   </div>
   
