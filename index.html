@@ -227,7 +227,7 @@
 
   <!-- Contract Address -->
   <div id="contractAddressContainer">
-    Contract Address: <span id="addressValue">YOUR_ADDRESS_HERE</span>
+    Contract Address: <span id="addressValue">coming soon</span>
     <button id="copyButton" title="Copy Address">Copy</button>
   </div>
   <br>
@@ -344,7 +344,7 @@
       // Copy Contract Address
       copyButton.addEventListener('click', () => {
         const addressToCopy = addressValueSpan.textContent;
-        if (!addressToCopy || addressToCopy === 'coming soon') {
+        if (!addressToCopy || addressToCopy === 'YOUR_ADDRESS_HERE') {
             alert('Address not set.'); // Prevent copying placeholder
             return;
         }
