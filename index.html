@@ -27,18 +27,27 @@
       padding-bottom: 40px; /* extra bottom padding */
     }
 
+    /* New Top Heading */
+    .top-heading {
+        font-size: 2.5rem; /* Adjust size as needed */
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.95); /* White-ish text */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        margin-bottom: 25px; /* Space below heading */
+    }
+
     /* Contract Address Container */
-    #contractAddressContainer { /* Renamed for clarity */
+    #contractAddressContainer {
       background: rgba(255, 255, 255, 0.9);
       padding: 15px 20px;
       border-radius: 10px;
       margin: 0 auto 20px auto;
       display: inline-block;
-      font-size: 1.2rem; /* Adjusted for consistency */
+      font-size: 1.2rem;
       font-weight: 500;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      max-width: 90%; /* Prevent overflow on small screens */
-      word-wrap: break-word; /* Wrap long addresses */
+      max-width: 90%;
+      word-wrap: break-word;
     }
     #copyButton {
       margin-left: 8px;
@@ -57,7 +66,7 @@
       background: #ccc;
     }
 
-    /* Header Toggle Button (changed from header to button) */
+    /* Header Toggle Button */
     .header-button {
       margin-bottom: 20px;
       padding: 20px 30px;
@@ -68,9 +77,9 @@
       transition: background 0.3s, transform 0.3s;
       font-size: 1.875rem;
       font-weight: 500;
-      border: none; /* Reset default button border */
-      font-family: inherit; /* Inherit font */
-      color: inherit; /* Inherit color */
+      border: none;
+      font-family: inherit;
+      color: inherit;
       text-align: center;
       display: inline-block;
     }
@@ -78,11 +87,10 @@
       background: rgba(255, 255, 255, 1);
       transform: scale(1.05);
     }
-    /* Focus style for accessibility */
     .header-button:focus-visible {
         outline: 3px solid #ff4081;
         outline-offset: 2px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(255, 64, 129, 0.5); /* Optional: add glow */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(255, 64, 129, 0.5);
     }
 
 
@@ -108,8 +116,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      /* pointer-events: none; REMOVED - needed for canvas click */
-      cursor: default; /* Default cursor, will be changed dynamically */
+      cursor: default;
     }
 
     /* Gallery styling */
@@ -128,31 +135,32 @@
       overflow: hidden;
       transition: transform 0.3s, border-color 0.3s;
       cursor: pointer;
-      background-color: #eee; /* Fallback bg */
+      background-color: #555; /* Darker fallback bg for video thumbs */
+      position: relative; /* Needed if adding elements on top */
     }
     .thumb:hover {
       transform: scale(1.05);
     }
     .thumb.active {
       border-color: #ff4081;
-      transform: scale(1.05); /* Make active thumb slightly larger */
+      transform: scale(1.05);
     }
-    /* Focus style for accessibility */
     .thumb:focus-visible {
         outline: 3px solid #ff4081;
         outline-offset: 1px;
         transform: scale(1.05);
     }
-    .thumb img { /* Style the thumbnail image */
+    /* Style the VIDEO inside the thumbnail */
+    .thumb video {
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: cover; /* Cover the area, might crop */
     }
 
     /* Footer OnlyFans Button */
     #footer {
-      margin-top: 30px; /* Increased margin */
+      margin-top: 30px;
     }
     .onlyfans-btn {
       display: inline-block;
@@ -169,7 +177,6 @@
       background: #ff1e7d;
       transform: scale(1.05);
     }
-     /* Focus style for accessibility */
     .onlyfans-btn:focus-visible {
        outline: 3px solid #ff1e7d;
        outline-offset: 2px;
@@ -178,23 +185,26 @@
 
     /* Mobile adjustments */
     @media (max-width: 600px) {
+       .top-heading {
+           font-size: 2rem; /* Smaller heading on mobile */
+           margin-bottom: 20px;
+       }
       #container {
-        max-width: 100%; /* Allow full width on small screens */
+        max-width: 100%;
       }
-      /* Allow gallery thumbnails to scroll horizontally */
       #gallery {
-        flex-wrap: nowrap; /* Prevent wrapping */
-        overflow-x: auto; /* Enable horizontal scroll */
-        justify-content: flex-start; /* Align items to the start */
-        padding: 10px; /* Add padding for scroll area */
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-        scrollbar-width: thin; /* Firefox scrollbar */
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
       }
-       /* Ensure thumbs don't shrink when scrolling */
       .thumb {
         flex-shrink: 0;
+        width: 120px; /* Smaller thumbs on mobile */
+        height: 80px;
       }
-       /* Adjust button/header text size */
        .header-button {
          font-size: 1.5rem;
          padding: 15px 20px;
@@ -211,6 +221,10 @@
   </style>
 </head>
 <body>
+
+  <!-- ADDED: Top Heading -->
+  <h1 class="top-heading">Here Me Out</h1>
+
   <!-- Contract Address -->
   <div id="contractAddressContainer">
     Contract Address: <span id="addressValue">YOUR_ADDRESS_HERE</span>
@@ -224,36 +238,35 @@
   <!-- Video Container -->
   <div id="container">
     <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture>
-      <!-- Start with the first video -->
       <source src="1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <canvas id="overlayCanvas"></canvas>
   </div>
 
-  <!-- Video Gallery with Image Thumbnails -->
+  <!-- Video Gallery using VIDEO Thumbnails -->
   <div id="gallery">
-    <!-- NOTE: Create these thumbnail images! -->
-    <div class="thumb active" data-video="1.mp4" tabindex="0"> <!-- Added tabindex for focus -->
-      <img src="thumbnails/1.jpg" alt="Video 1 Thumbnail">
+    <!-- Reverted to using <video> for thumbnails -->
+    <div class="thumb active" data-video="1.mp4" tabindex="0">
+      <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="2.mp4" tabindex="0">
-      <img src="thumbnails/2.jpg" alt="Video 2 Thumbnail">
+      <video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="3.mp4" tabindex="0">
-      <img src="thumbnails/3.jpg" alt="Video 3 Thumbnail">
+      <video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="4.mp4" tabindex="0">
-      <img src="thumbnails/4.jpg" alt="Video 4 Thumbnail">
+      <video src="4.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="5.mp4" tabindex="0">
-      <img src="thumbnails/5.jpg" alt="Video 5 Thumbnail">
+      <video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="6.mp4" tabindex="0">
-      <img src="thumbnails/6.jpg" alt="Video 6 Thumbnail">
+      <video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
     <div class="thumb" data-video="7.mp4" tabindex="0">
-      <img src="thumbnails/7.jpg" alt="Video 7 Thumbnail">
+      <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline></video>
     </div>
   </div>
 
@@ -267,6 +280,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Get references to DOM elements
       const video = document.getElementById('video');
       const canvas = document.getElementById('overlayCanvas');
       const ctx = canvas.getContext('2d');
@@ -283,15 +297,14 @@
       };
       bagImage.onerror = () => {
           console.error("Error loading bag.png! Bag overlay will not work.");
-          // Optionally disable the toggle button if the image fails
-          // bagToggle.disabled = true;
+          // bagToggle.disabled = true; // Optionally disable if image fails
           // bagToggle.textContent = "Bag unavailable";
       };
 
-      // Global state
-      let useBag = true; // Default: overlay on
-      let bagRect = null; // Stores bag position {x, y, width, height} for click detection
-      let processingLoopStarted = false; // Flag to prevent multiple loop starts
+      // --- Global State ---
+      let useBag = true; // Bag overlay is ON by default
+      let bagRect = null; // Stores bag position {x, y, width, height} for click/hover
+      let processingLoopStarted = false; // Prevent multiple Face Mesh loops
 
       // --- UI Update Functions ---
       function updateHeaderButton() {
@@ -300,11 +313,11 @@
 
       // --- Event Listeners ---
 
-      // Toggle bag overlay via button
+      // Toggle bag via button
       bagToggle.addEventListener('click', () => {
         useBag = !useBag;
         updateHeaderButton();
-        // Immediately clear canvas and reset cursor if bag is turned off
+        // Clear canvas and reset cursor state immediately if bag is turned off
         if (!useBag) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.cursor = 'default';
@@ -312,15 +325,14 @@
         }
       });
 
-      // Toggle bag overlay via clicking on the bag itself
+      // Toggle bag via clicking on the bag itself on the canvas
       canvas.addEventListener('click', (e) => {
-        // Check if the click was within the bag's bounds AND the bag is currently visible
         if (useBag && bagRect &&
             e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
             e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height) {
           useBag = !useBag;
           updateHeaderButton();
-          // Clear canvas if bag turned off
+          // Clear canvas and reset cursor state if bag turned off
           if (!useBag) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.cursor = 'default';
@@ -332,35 +344,61 @@
       // Copy Contract Address
       copyButton.addEventListener('click', () => {
         const addressToCopy = addressValueSpan.textContent;
+        if (!addressToCopy || addressToCopy === 'YOUR_ADDRESS_HERE') {
+            alert('Address not set.'); // Prevent copying placeholder
+            return;
+        }
         navigator.clipboard.writeText(addressToCopy).then(() => {
           copyButton.textContent = 'Copied!';
-          copyButton.disabled = true; // Prevent re-clicking immediately
+          copyButton.disabled = true;
           setTimeout(() => {
              copyButton.textContent = 'Copy';
              copyButton.disabled = false;
-          }, 2000); // Reset after 2 seconds
+          }, 2000);
         }).catch(err => {
           console.error('Failed to copy address: ', err);
-          alert('Could not copy address. Please copy manually.'); // Fallback
+          // Fallback for older browsers or specific errors
+          try {
+              const textArea = document.createElement("textarea");
+              textArea.value = addressToCopy;
+              textArea.style.position = "fixed"; // Prevent scrolling to bottom
+              textArea.style.left = "-9999px";
+              document.body.appendChild(textArea);
+              textArea.focus();
+              textArea.select();
+              document.execCommand('copy');
+              document.body.removeChild(textArea);
+              copyButton.textContent = 'Copied!';
+              copyButton.disabled = true;
+              setTimeout(() => { copyButton.textContent = 'Copy'; copyButton.disabled = false; }, 2000);
+          } catch (execErr) {
+              console.error('Fallback copy failed:', execErr);
+              alert('Could not copy address automatically. Please copy it manually.');
+          }
         });
       });
 
-      // Adjust canvas size when video metadata loads
+      // Adjust canvas size when main video metadata loads
       video.addEventListener('loadedmetadata', () => {
-        console.log("Video metadata loaded. Adjusting canvas size.");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        console.log("Main video metadata loaded. Adjusting canvas size.");
+        // Ensure dimensions are valid before setting
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+             canvas.width = video.videoWidth;
+             canvas.height = video.videoHeight;
+        } else {
+            console.warn("Video dimensions reported as 0. Canvas size not set yet.");
+            // Consider setting a default size or retrying later if this happens often
+        }
       });
 
-      // Video error handling
+      // Main video error handling
        video.onerror = (e) => {
-           console.error("Error loading video:", video.error?.message || 'Unknown video error');
-           // You could display a user-friendly message here
+           console.error("Error loading main video:", video.error?.message || 'Unknown video error');
+           // Maybe display an error message overlay on the video container
        };
        video.onstalled = () => {
-           console.warn("Video stalled. Network issue or file corruption?");
+           console.warn("Main video stalled. Check network or video file.");
        };
-
 
       // --- MediaPipe Face Mesh Setup ---
       const faceMesh = new FaceMesh({
@@ -369,29 +407,39 @@
 
       faceMesh.setOptions({
         maxNumFaces: 1,
-        refineLandmarks: true, // Provides more detail but is slower
-        // Set refineLandmarks: false for potentially faster processing if precise eye/lip tracking isn't needed for the bag
-        // refineLandmarks: false,
-        minDetectionConfidence: 0.5, // Confidence for initial face detection
-        minTrackingConfidence: 0.5  // Confidence for tracking face across frames
+        refineLandmarks: true, // Slower, more detailed landmarks
+        // refineLandmarks: false, // Faster, less detailed landmarks
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5
       });
 
-      // Callback for when Face Mesh processes a frame
+      // Callback for when Face Mesh has results
       faceMesh.onResults(onResults);
 
       function onResults(results) {
-        // Clear previous drawings
+        // Ensure canvas context is valid
+         if (!ctx) {
+            console.error("Canvas context is not available.");
+            return;
+         }
+        // Clear previous frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Reset bagRect and cursor logic unless updated below
-        bagRect = null;
-        let isHoveringBag = false;
+        bagRect = null; // Reset bag position data for this frame
+        let isHoveringBag = false; // Reset hover state
 
+        // Check for face landmarks
         if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
           const landmarks = results.multiFaceLandmarks[0];
-          const videoWidth = canvas.width; // Use canvas dimensions which match video
+          const videoWidth = canvas.width; // Use canvas dimensions
           const videoHeight = canvas.height;
 
-          // --- Calculate Face Bounding Box and Bag Position ---
+          // Make sure we have valid dimensions to work with
+          if (videoWidth === 0 || videoHeight === 0) {
+              console.warn("Canvas dimensions are zero, skipping bag calculation.");
+              return; // Skip drawing if canvas isn't sized correctly
+          }
+
+          // Calculate face bounding box
           let minX = videoWidth, minY = videoHeight, maxX = 0, maxY = 0;
           for (const landmark of landmarks) {
               const px = landmark.x * videoWidth;
@@ -403,59 +451,75 @@
           }
           const faceWidth = maxX - minX;
           const faceHeight = maxY - minY;
+
+          // Ensure calculated face dimensions are valid
+          if (faceWidth <= 0 || faceHeight <= 0) {
+              console.warn("Calculated face dimensions are invalid, skipping bag draw.");
+              return;
+          }
+
           const centerX = minX + faceWidth / 2;
           const centerY = minY + faceHeight / 2;
 
-          // Adjust position and size of the bag relative to the face
-          const bagScale = 1.35; // How much bigger than the face box
+          // Calculate bag position and size
+          const bagScale = 1.35;
           const bagWidth = faceWidth * bagScale;
           const bagHeight = faceHeight * bagScale;
-          const bagYOffset = faceHeight * 0.20; // Move bag up relative to face center (adjust as needed)
+          const bagYOffset = faceHeight * 0.20; // Adjust vertical position
           const bagX = centerX - bagWidth / 2;
           const bagY = centerY - bagHeight / 2 - bagYOffset;
 
-          // Store the calculated rectangle for click/hover detection
+          // Store bag rectangle for interactions
           bagRect = { x: bagX, y: bagY, width: bagWidth, height: bagHeight };
 
-          // --- Draw Bag Overlay ---
-          if (useBag && bagImage.complete && bagImage.naturalWidth > 0) { // Check if image is loaded and valid
-             ctx.drawImage(bagImage, bagX, bagY, bagWidth, bagHeight);
+          // Draw the bag if enabled and image is ready
+          if (useBag && bagImage.complete && bagImage.naturalWidth > 0) {
+             try {
+                ctx.drawImage(bagImage, bagX, bagY, bagWidth, bagHeight);
+             } catch (drawError) {
+                 console.error("Error drawing bag image:", drawError);
+             }
 
-             // --- Add Hover Effect Logic ---
-             // Debounced check needed if performance becomes an issue, but this is simple
+             // Set up hover detection for the bag area
              canvas.onmousemove = (e) => {
-                 if (useBag && bagRect && // Check useBag state again inside listener
+                 if (useBag && bagRect && // Check state *inside* listener too
                      e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
                      e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height)
                  {
                     if (canvas.style.cursor !== 'pointer') {
-                         canvas.style.cursor = 'pointer';
+                         canvas.style.cursor = 'pointer'; // Change cursor to pointer
                      }
-                    isHoveringBag = true; // Flag used below if needed
+                    isHoveringBag = true;
                  } else {
                      if (canvas.style.cursor !== 'default') {
-                         canvas.style.cursor = 'default';
+                         canvas.style.cursor = 'default'; // Change back to default
                      }
                     isHoveringBag = false;
                  }
              };
-             // Initial check in case mouse is already over the bag
-             // Simulating mouse move event to trigger the check immediately (optional)
-             // const currentMouseEvent = new MouseEvent('mousemove', { clientX: lastMouseX, clientY: lastMouseY }); // Need to track mouse coords for this
-             // canvas.dispatchEvent(currentMouseEvent);
+             // Optional: Add mouseleave listener to ensure cursor resets if mouse leaves canvas quickly
+             canvas.onmouseleave = () => {
+                 if (canvas.style.cursor !== 'default') {
+                     canvas.style.cursor = 'default';
+                 }
+                 canvas.onmousemove = null; // Stop tracking moves when mouse leaves
+             };
+
           } else {
-              // If bag is not drawn, ensure cursor is default and remove listener
+              // Bag not drawn: ensure cursor is default, remove hover listener
               if (canvas.style.cursor !== 'default') {
                  canvas.style.cursor = 'default';
               }
               canvas.onmousemove = null;
+              canvas.onmouseleave = null; // Also clear leave listener
           }
         } else {
-            // No face detected, ensure cursor is default
+            // No face detected: ensure cursor is default, clear listeners
              if (canvas.style.cursor !== 'default') {
                canvas.style.cursor = 'default';
              }
              canvas.onmousemove = null;
+             canvas.onmouseleave = null;
              bagRect = null; // Clear rect if no face
         }
       }
@@ -463,76 +527,90 @@
 
       // --- Video Processing Loop ---
       async function processVideo() {
-        // Only process if video has data, is playing, and loop hasn't been stopped
+         // Check if video is ready to provide frames
         if (video.readyState >= video.HAVE_CURRENT_DATA && !video.paused && !video.ended) {
-          try {
-            // Make sure canvas dimensions match video before sending
-            if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                console.log("Canvas resized in loop to match video.");
+          // Ensure canvas dimensions match video (important if video source changes size)
+          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+                if (video.videoWidth > 0 && video.videoHeight > 0) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    console.log("Canvas resized in loop to match video.");
+                }
             }
-            await faceMesh.send({ image: video });
-          } catch (error) {
-            console.error("Error sending video frame to Face Mesh:", error);
-            // Potentially stop the loop or add more robust error handling
+
+          // Only send if canvas is sized properly
+          if (canvas.width > 0 && canvas.height > 0) {
+              try {
+                await faceMesh.send({ image: video });
+              } catch (error) {
+                console.error("Error sending video frame to Face Mesh:", error);
+                // Consider adding a mechanism to pause/retry if errors persist
+              }
           }
         }
-        // Keep requesting the next frame
+        // Continue the loop
         requestAnimationFrame(processVideo);
       }
 
-      // Start the processing loop once the video is ready to play
+      // Start the processing loop once the video can play
       video.addEventListener('canplay', () => {
-          console.log("Video is ready to play ('canplay' event).");
+          console.log("Video 'canplay' event fired.");
           if (!processingLoopStarted) {
               console.log("Starting Face Mesh processing loop.");
-              processVideo(); // Start the loop
-              processingLoopStarted = true; // Set the flag
+              requestAnimationFrame(processVideo); // Start the loop using rAF
+              processingLoopStarted = true;
           }
-          // Ensure video plays if 'autoplay' failed (some browsers block it)
-          video.play().catch(e => console.warn("Autoplay prevented:", e));
-      }, { once: true }); // Use 'once' to ensure this listener runs only one time
+          // Attempt to play, catching potential browser blocks
+          video.play().catch(e => console.warn("Autoplay/Play after load prevented:", e));
+      }, { once: true }); // Listener runs only once per video load
 
       // --- Gallery Selection Logic ---
       const thumbs = gallery.querySelectorAll('.thumb');
+
+      function switchVideo(selectedThumb) {
+          if (!selectedThumb || selectedThumb.classList.contains('active')) {
+              return; // Do nothing if already active or invalid thumb
+          }
+
+          // Update active state
+          thumbs.forEach(t => t.classList.remove('active'));
+          selectedThumb.classList.add('active');
+
+          const newVideoSrc = selectedThumb.getAttribute('data-video');
+          console.log(`Switching main video to: ${newVideoSrc}`);
+
+          // Pause current, set new source, load, and attempt play
+          video.pause();
+          processingLoopStarted = false; // Reset loop flag for the new video
+          video.src = newVideoSrc;
+          video.load(); // Crucial step
+
+          // Note: The 'canplay' event listener added earlier will handle starting
+          // the processing loop and playing the video once it's loaded.
+      }
+
       thumbs.forEach(thumb => {
-        // Handle click events
+        // Handle click
         thumb.addEventListener('click', function() {
           switchVideo(this);
         });
-        // Handle keyboard events (Enter/Space) for accessibility
+        // Handle keyboard (Enter/Space)
         thumb.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault(); // Prevent spacebar scrolling
+                event.preventDefault(); // Prevent default space scroll
                 switchVideo(this);
+                this.blur(); // Optional: remove focus after activation
             }
         });
       });
 
-      function switchVideo(selectedThumb) {
-          // Remove active class from all thumbnails
-          thumbs.forEach(t => t.classList.remove('active'));
-          // Add active class to the clicked/selected thumbnail
-          selectedThumb.classList.add('active');
-
-          const newVideoSrc = selectedThumb.getAttribute('data-video');
-          console.log(`Switching video to: ${newVideoSrc}`);
-
-          // Pause current video, change source, load, and play
-          video.pause();
-          video.src = newVideoSrc;
-          video.load(); // Important to load the new source
-          video.play().catch(e => console.warn("Play after switch prevented:", e)); // Attempt to play the new video
-
-          // Reset bag state visually immediately (optional, prevents flicker)
-          // ctx.clearRect(0, 0, canvas.width, canvas.height);
-          // bagRect = null;
-      }
-
-
-      // --- Initial Setup Calls ---
-      updateHeaderButton(); // Set initial button text
+      // --- Initial Setup ---
+      updateHeaderButton(); // Set initial text for the bag toggle button
+      // Ensure thumbnail videos don't play audio (should already be muted)
+      document.querySelectorAll('#gallery .thumb video').forEach(thumbVideo => {
+          thumbVideo.muted = true;
+          thumbVideo.volume = 0; // Explicitly set volume to 0
+      });
 
     }); // End DOMContentLoaded
   </script>
