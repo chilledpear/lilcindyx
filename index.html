@@ -7,196 +7,189 @@
   <!-- Preload key resources -->
   <link rel="preload" href="bag.png" as="image">
   <link rel="preload" href="1.mp4" as="video" type="video/mp4">
-  <!-- Font Loading Optimization -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #8a2be2;
-      --primary-dark: #6a1cb9;
-      --accent: #ff4081;
-      --dark: #121212;
-      --darker: #0a0a0a;
-      --light: #f8f9fa;
-      --gray: #2d2d2d;
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-color: #ff6b6b;
+      --text-primary: #2d3748;
+      --text-secondary: #718096;
+      --text-light: rgba(255, 255, 255, 0.95);
+      --bg-glass: rgba(255, 255, 255, 0.1);
+      --bg-glass-strong: rgba(255, 255, 255, 0.15);
+      --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.12);
+      --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.15);
       --border-radius: 16px;
-      --transition: all 0.3s ease;
+      --border-radius-lg: 24px;
     }
-    
-    /* Base styles */
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--darker), var(--dark));
-      color: var(--light);
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      overscroll-behavior: none;
+
+    html, body {
+      height: 100vh;
       overflow-x: hidden;
+      overscroll-behavior: none;
     }
-    
-    /* Layout */
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary-gradient);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Glassmorphism container */
     .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1.5rem;
       max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      flex: 1;
-    }
-    
-    header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-    
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      flex: 1;
-    }
-    
-    /* Typography */
-    .top-heading {
-      font-size: 2.8rem;
-      font-weight: 700;
-      background: linear-gradient(to right, var(--accent), #ff9a9e);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-align: center;
-      margin: 0;
-      letter-spacing: -0.5px;
-      line-height: 1.1;
-    }
-    
-    .subheading {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.7);
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    /* Card styles */
-    .card {
-      background: rgba(30, 30, 30, 0.7);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--border-radius);
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Contract Address */
-    #contractAddressContainer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      border-radius: 50px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       width: 100%;
-      max-width: 600px;
+      margin: 0 auto;
+      min-height: 100vh;
     }
-    
-    #addressValue {
-      font-family: monospace;
-      font-size: 0.95rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      flex: 1;
-      padding-right: 15px;
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 1rem;
     }
-    
-    #copyButton {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 8px 20px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: var(--transition);
-      flex-shrink: 0;
+
+    .logo {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #f8f9fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
     }
-    
-    #copyButton:hover {
-      background: var(--primary-dark);
+
+    /* Contract address card */
+    .contract-card {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      transition: all 0.3s ease;
+    }
+
+    .contract-card:hover {
+      background: var(--bg-glass-strong);
       transform: translateY(-2px);
     }
-    
-    #copyButton:active {
+
+    .address-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-light);
+      word-break: break-all;
+      text-align: center;
+    }
+
+    .copy-btn {
+      background: var(--secondary-gradient);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      color: white;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .copy-btn:active {
       transform: translateY(0);
     }
-    
-    /* Bag Toggle Button */
-    #bagToggle {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 16px 40px;
-      font-size: 1.2rem;
+
+    /* Main content area */
+    .main-content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 1.5rem;
+      min-height: 0;
+    }
+
+    /* Toggle button */
+    .toggle-btn {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius);
+      padding: 1rem 2rem;
+      color: var(--text-light);
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+      font-family: inherit;
+      justify-self: center;
+      text-align: center;
     }
-    
-    #bagToggle:hover {
-      background: var(--primary-dark);
+
+    .toggle-btn:hover {
+      background: var(--bg-glass-strong);
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.4);
+      box-shadow: var(--shadow-strong);
     }
-    
-    #bagToggle:active {
-      transform: translateY(0);
+
+    .toggle-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 3px;
     }
-    
-    #bagToggle svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
-    }
-    
-    /* Video Container */
-    #video-container {
+
+    /* Video container */
+    .video-container {
       position: relative;
-      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: var(--border-radius-lg);
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-      flex: 1;
-      max-height: 60vh;
-      min-height: 300px;
+      box-shadow: var(--shadow-strong);
+      background: rgba(0, 0, 0, 0.1);
+      aspect-ratio: 16/9;
     }
-    
-    #video-container video {
+
+    .video-container video {
       width: 100%;
       height: 100%;
-      display: block;
       object-fit: cover;
+      display: block;
     }
-    
+
     #overlayCanvas {
       position: absolute;
       top: 0;
@@ -204,243 +197,276 @@
       width: 100%;
       height: 100%;
       cursor: default;
+      z-index: 2;
     }
-    
+
     /* Gallery */
-    #gallery-section {
+    .gallery {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .gallery-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      padding-left: 10px;
-    }
-    
-    #gallery {
-      display: flex;
-      gap: 15px;
-      padding: 5px;
+      gap: 0.75rem;
       overflow-x: auto;
+      padding: 0.5rem 0;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: var(--primary) transparent;
+      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
     }
-    
-    #gallery::-webkit-scrollbar {
-      height: 8px;
+
+    .gallery::-webkit-scrollbar {
+      height: 6px;
     }
-    
-    #gallery::-webkit-scrollbar-track {
-      background: transparent;
-      border-radius: 4px;
+
+    .gallery::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
     }
-    
-    #gallery::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 4px;
+
+    .gallery::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
     }
-    
+
+    .gallery::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
     .thumb {
-      width: 140px;
-      height: 100px;
+      flex-shrink: 0;
+      width: 120px;
+      height: 80px;
       border-radius: 12px;
       overflow: hidden;
-      transition: var(--transition);
       cursor: pointer;
-      position: relative;
-      flex-shrink: 0;
+      transition: all 0.3s ease;
       border: 2px solid transparent;
+      background: var(--bg-glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
     }
-    
+
+    .thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      -webkit-mask-composite: xor;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
     .thumb:hover {
-      transform: scale(1.05);
-      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--shadow-soft);
     }
-    
+
+    .thumb:hover::before {
+      opacity: 1;
+    }
+
     .thumb.active {
-      border-color: var(--accent);
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+      border-color: var(--accent-color);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
     }
-    
+
+    .thumb:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 3px;
+    }
+
     .thumb video {
       width: 100%;
       height: 100%;
-      display: block;
       object-fit: cover;
+      display: block;
+      border-radius: inherit;
     }
-    
-    /* OnlyFans Button */
-    #footer {
-      display: flex;
-      justify-content: center;
-      margin-top: 25px;
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1rem 0;
     }
-    
-    .onlyfans-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+
+    .cta-btn {
+      display: inline-block;
       text-decoration: none;
-      padding: 16px 40px;
-      background: var(--accent);
+      background: var(--secondary-gradient);
       color: white;
-      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
       font-weight: 600;
-      border-radius: 50px;
-      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
-      transition: var(--transition);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
-    
-    .onlyfans-btn:hover {
-      background: #e91e63;
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .cta-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 64, 129, 0.4);
+      box-shadow: var(--shadow-strong);
     }
-    
-    .onlyfans-btn:active {
-      transform: translateY(0);
+
+    .cta-btn:hover::before {
+      left: 100%;
     }
-    
-    .onlyfans-btn svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
+
+    .cta-btn:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 3px;
     }
-    
-    /* Mobile adjustments */
+
+    /* Responsive design */
     @media (max-width: 768px) {
-      body {
-        padding: 15px;
+      .container {
+        padding: 0.75rem;
+        gap: 1rem;
       }
-      
-      .top-heading {
-        font-size: 2.2rem;
+
+      .logo {
+        font-size: 2.5rem;
       }
-      
-      .subheading {
+
+      .contract-card {
+        padding: 0.75rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .address-text {
+        font-size: 0.8rem;
+      }
+
+      .toggle-btn {
+        padding: 0.75rem 1.5rem;
         font-size: 1rem;
       }
-      
-      #bagToggle {
-        padding: 14px 30px;
-        font-size: 1.1rem;
+
+      .video-container {
+        max-width: 100%;
       }
-      
-      #video-container {
-        min-height: 250px;
-      }
-      
+
       .thumb {
-        width: 110px;
-        height: 80px;
+        width: 100px;
+        height: 66px;
       }
-      
-      .onlyfans-btn {
-        padding: 14px 30px;
-        font-size: 1.1rem;
+
+      .cta-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: 1rem;
       }
     }
-    
+
     @media (max-width: 480px) {
-      .top-heading {
-        font-size: 1.8rem;
+      .container {
+        padding: 0.5rem;
       }
-      
-      #contractAddressContainer {
-        padding: 10px 15px;
+
+      .logo {
+        font-size: 2rem;
       }
-      
-      #copyButton {
-        padding: 6px 15px;
-        font-size: 0.85rem;
-      }
-      
-      #bagToggle {
-        padding: 12px 25px;
-        font-size: 1rem;
-        width: 100%;
-        justify-content: center;
-      }
-      
+
       .thumb {
         width: 90px;
-        height: 65px;
-      }
-      
-      .onlyfans-btn {
-        width: 100%;
-        justify-content: center;
+        height: 60px;
       }
     }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container > * {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .container > *:nth-child(2) { animation-delay: 0.1s; }
+    .container > *:nth-child(3) { animation-delay: 0.2s; }
+    .container > *:nth-child(4) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1 class="top-heading">OnlyFangs</h1>
-      <p class="subheading">Interactive experience with facial tracking technology</p>
+    <!-- Header -->
+    <div class="header">
+      <h1 class="logo">OnlyFangs</h1>
       
-      <div class="card" id="contractAddressContainer">
-        <span id="addressValue">0x742d35Cc6634C0532925a3b844Bc454e4438f44e</span>
-        <button id="copyButton">Copy</button>
+      <!-- Contract Address -->
+      <div class="contract-card">
+        <span class="address-text">Contract: <span id="addressValue">YOUR_ADDRESS_HERE</span></span>
+        <button id="copyButton" class="copy-btn" title="Copy Address">Copy</button>
       </div>
-      
-      <button id="bagToggle" type="button">
-        <svg viewBox="0 0 24 24">
-          <path d="M19 6h-2c0-2.8-2.2-5-5-5S7 3.2 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.7 0 3 1.3 3 3H9c0-1.7 1.3-3 3-3zm7 17H5V8h2v2c0 .6.4 1 1 1s1-.4 1-1V8h6v2c0 .6.4 1 1 1s1-.4 1-1V8h2v12z"/>
-        </svg>
-        <span>Click to remove the bag</span>
-      </button>
-    </header>
-    
-    <main class="main-content">
-      <div class="card" id="video-container">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Toggle Button -->
+      <button id="bagToggle" type="button" class="toggle-btn">Click to remove the bag</button>
+
+      <!-- Video Container -->
+      <div class="video-container">
         <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
           <source src="1.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
         <canvas id="overlayCanvas"></canvas>
       </div>
-      
-      <div class="card" id="gallery-section">
-        <h3 class="gallery-title">Select a video</h3>
-        <div id="gallery">
-          <div class="thumb active" data-video="1.mp4" tabindex="0">
-            <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="2.mp4" tabindex="0">
-            <video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="3.mp4" tabindex="0">
-            <video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="4.mp4" tabindex="0">
-            <video src="4.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="5.mp4" tabindex="0">
-            <video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="6.mp4" tabindex="0">
-            <video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
-          <div class="thumb" data-video="7.mp4" tabindex="0">
-            <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
-          </div>
+
+      <!-- Video Gallery -->
+      <div class="gallery">
+        <div class="thumb active" data-video="1.mp4" tabindex="0">
+          <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="2.mp4" tabindex="0">
+          <video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="3.mp4" tabindex="0">
+          <video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="4.mp4" tabindex="0">
+          <video src="4.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="5.mp4" tabindex="0">
+          <video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="6.mp4" tabindex="0">
+          <video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
+        </div>
+        <div class="thumb" data-video="7.mp4" tabindex="0">
+          <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
         </div>
       </div>
-    </main>
-    
-    <footer id="footer">
-      <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="onlyfans-btn">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 15h-2v-6h2v6zm-1-7.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm7 7.5h-4v-2h1v-2.5c0-1.1-.9-2-2-2-1.1 0-2 .9-2 2v3h2v4h3v-4h1v-2h-1v-1c0-.6.4-1 1-1s1 .4 1 1v3z"/>
-        </svg>
-        <span>Visit Cindy's OnlyFans</span>
-      </a>
-    </footer>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="cta-btn">Visit Cindy's OnlyFans</a>
+    </div>
   </div>
 
   <!-- Load MediaPipe Face Mesh and Drawing Utilities -->
@@ -455,26 +481,26 @@
       const bagToggle = document.getElementById('bagToggle');
       const copyButton = document.getElementById('copyButton');
       const addressValueSpan = document.getElementById('addressValue');
-      const gallery = document.getElementById('gallery');
-      const bagToggleText = bagToggle.querySelector('span');
+      const gallery = document.querySelector('.gallery');
 
       // Load the bag overlay image
       const bagImage = new Image();
       bagImage.src = 'bag.png';
-      bagImage.onload = () => console.log("Bag image loaded successfully.");
-      bagImage.onerror = () => console.error("Error loading bag.png! Bag overlay will not work.");
+      bagImage.onload = () => {
+          console.log("Bag image loaded successfully.");
+      };
+      bagImage.onerror = () => {
+          console.error("Error loading bag.png! Bag overlay will not work.");
+      };
 
       // --- Global State ---
       let useBag = true;
       let bagRect = null;
       let processingLoopStarted = false;
-      let lastFrameTime = 0;
-      const targetFPS = 30;
-      const frameInterval = 1000 / targetFPS;
 
       // --- UI Update Functions ---
       function updateHeaderButton() {
-        bagToggleText.textContent = useBag ? "Click to remove the bag" : "Click to use the bag";
+        bagToggle.textContent = useBag ? "Click to remove the bag" : "Click to use the bag";
       }
 
       // --- Event Listeners ---
@@ -484,13 +510,13 @@
         useBag = !useBag;
         updateHeaderButton();
         if (!useBag) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.style.cursor = 'default';
-          canvas.onmousemove = null;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.cursor = 'default';
+            canvas.onmousemove = null;
         }
       });
 
-      // Toggle bag via clicking on the bag itself
+      // Toggle bag via clicking on the bag itself on the canvas
       canvas.addEventListener('click', (e) => {
         if (useBag && bagRect &&
             e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
@@ -509,35 +535,56 @@
       copyButton.addEventListener('click', () => {
         const addressToCopy = addressValueSpan.textContent;
         if (!addressToCopy || addressToCopy === 'YOUR_ADDRESS_HERE') {
-          alert('Address not set.');
-          return;
+            alert('Address not set.');
+            return;
         }
-        
         navigator.clipboard.writeText(addressToCopy).then(() => {
-          const originalText = copyButton.textContent;
           copyButton.textContent = 'Copied!';
           copyButton.disabled = true;
           setTimeout(() => {
-            copyButton.textContent = originalText;
-            copyButton.disabled = false;
+             copyButton.textContent = 'Copy';
+             copyButton.disabled = false;
           }, 2000);
         }).catch(err => {
           console.error('Failed to copy address: ', err);
-          alert('Could not copy address automatically. Please copy it manually.');
+          try {
+              const textArea = document.createElement("textarea");
+              textArea.value = addressToCopy;
+              textArea.style.position = "fixed";
+              textArea.style.left = "-9999px";
+              document.body.appendChild(textArea);
+              textArea.focus();
+              textArea.select();
+              document.execCommand('copy');
+              document.body.removeChild(textArea);
+              copyButton.textContent = 'Copied!';
+              copyButton.disabled = true;
+              setTimeout(() => { copyButton.textContent = 'Copy'; copyButton.disabled = false; }, 2000);
+          } catch (execErr) {
+              console.error('Fallback copy failed:', execErr);
+              alert('Could not copy address automatically. Please copy it manually.');
+          }
         });
       });
 
       // Adjust canvas size when main video metadata loads
       video.addEventListener('loadedmetadata', () => {
+        console.log("Main video metadata loaded. Adjusting canvas size.");
         if (video.videoWidth > 0 && video.videoHeight > 0) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
+             canvas.width = video.videoWidth;
+             canvas.height = video.videoHeight;
+        } else {
+            console.warn("Video dimensions reported as 0. Canvas size not set yet.");
         }
       });
 
       // Main video error handling
-      video.onerror = () => console.error("Error loading main video");
-      video.onstalled = () => console.warn("Main video stalled.");
+       video.onerror = (e) => {
+           console.error("Error loading main video:", video.error?.message || 'Unknown video error');
+       };
+       video.onstalled = () => {
+           console.warn("Main video stalled. Check network or video file.");
+       };
 
       // --- MediaPipe Face Mesh Setup ---
       const faceMesh = new FaceMesh({
@@ -555,8 +602,10 @@
       faceMesh.onResults(onResults);
 
       function onResults(results) {
-        if (!ctx) return;
-        
+         if (!ctx) {
+            console.error("Canvas context is not available.");
+            return;
+         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bagRect = null;
         let isHoveringBag = false;
@@ -566,27 +615,31 @@
           const videoWidth = canvas.width;
           const videoHeight = canvas.height;
 
-          if (videoWidth === 0 || videoHeight === 0) return;
+          if (videoWidth === 0 || videoHeight === 0) {
+              console.warn("Canvas dimensions are zero, skipping bag calculation.");
+              return;
+          }
 
-          // Calculate face bounding box
           let minX = videoWidth, minY = videoHeight, maxX = 0, maxY = 0;
           for (const landmark of landmarks) {
-            const px = landmark.x * videoWidth;
-            const py = landmark.y * videoHeight;
-            if (px < minX) minX = px;
-            if (py < minY) minY = py;
-            if (px > maxX) maxX = px;
-            if (py > maxY) maxY = py;
+              const px = landmark.x * videoWidth;
+              const py = landmark.y * videoHeight;
+              if (px < minX) minX = px;
+              if (py < minY) minY = py;
+              if (px > maxX) maxX = px;
+              if (py > maxY) maxY = py;
           }
-          
           const faceWidth = maxX - minX;
           const faceHeight = maxY - minY;
-          if (faceWidth <= 0 || faceHeight <= 0) return;
+
+          if (faceWidth <= 0 || faceHeight <= 0) {
+              console.warn("Calculated face dimensions are invalid, skipping bag draw.");
+              return;
+          }
 
           const centerX = minX + faceWidth / 2;
           const centerY = minY + faceHeight / 2;
 
-          // Calculate bag position and size
           const bagScale = 1.35;
           const bagWidth = faceWidth * bagScale;
           const bagHeight = faceHeight * bagScale;
@@ -596,31 +649,58 @@
 
           bagRect = { x: bagX, y: bagY, width: bagWidth, height: bagHeight };
 
-          // Draw the bag if enabled
           if (useBag && bagImage.complete && bagImage.naturalWidth > 0) {
-            try {
-              ctx.drawImage(bagImage, bagX, bagY, bagWidth, bagHeight);
-            } catch (drawError) {
-              console.error("Error drawing bag image:", drawError);
-            }
+             try {
+                ctx.drawImage(bagImage, bagX, bagY, bagWidth, bagHeight);
+             } catch (drawError) {
+                 console.error("Error drawing bag image:", drawError);
+             }
 
-            // Set up hover detection
-            canvas.onmousemove = (e) => {
-              if (useBag && bagRect && 
-                  e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
-                  e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height) {
-                canvas.style.cursor = 'pointer';
-                isHoveringBag = true;
-              } else {
-                canvas.style.cursor = 'default';
-                isHoveringBag = false;
+             canvas.onmousemove = (e) => {
+                 if (useBag && bagRect &&
+                     e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
+                     e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height)
+                 {
+                    if (canvas.style.cursor !== 'pointer') {
+                         canvas.style.cursor = 'pointer';
+                     }
+                    isHoveringBag = true;
+                 } else {
+                     if (canvas.style.cursor !== 'default') {
+                         canvas.style.cursor = 'default';
+                     }
+                    isHoveringBag = false;
+                 }
+             };
+             canvas.onmouseleave = () => {
+                 if (canvas.style.cursor !== 'default') {
+                     canvas.style.cursor = 'default';
+                 }
+                 canvas.onmousemove = null;
+             };
+
+          } else {
+              if (canvas.style.cursor !== 'default') {
+                 canvas.style.cursor = 'default';
               }
-            };
+              canvas.onmousemove = null;
+              canvas.onmouseleave = null;
           }
+        } else {
+             if (canvas.style.cursor !== 'default') {
+               canvas.style.cursor = 'default';
+             }
+             canvas.onmousemove = null;
+             canvas.onmouseleave = null;
+             bagRect = null;
         }
       }
 
       // --- Video Processing Loop ---
+      let lastFrameTime = 0;
+      const targetFPS = 30;
+      const frameInterval = 1000 / targetFPS;
+
       async function processVideo(timestamp) {
         if (timestamp - lastFrameTime < frameInterval) {
           requestAnimationFrame(processVideo);
@@ -647,39 +727,46 @@
         requestAnimationFrame(processVideo);
       }
 
-      // Start the processing loop
       video.addEventListener('canplay', () => {
-        if (!processingLoopStarted) {
-          requestAnimationFrame(processVideo);
-          processingLoopStarted = true;
-        }
-        video.play().catch(e => console.warn("Autoplay prevented:", e));
+          console.log("Video 'canplay' event fired.");
+          if (!processingLoopStarted) {
+              console.log("Starting Face Mesh processing loop.");
+              requestAnimationFrame(processVideo);
+              processingLoopStarted = true;
+          }
+          video.play().catch(e => console.warn("Autoplay/Play after load prevented:", e));
       }, { once: true });
 
       // --- Gallery Selection Logic ---
       const thumbs = gallery.querySelectorAll('.thumb');
 
       function switchVideo(selectedThumb) {
-        if (!selectedThumb || selectedThumb.classList.contains('active')) return;
+          if (!selectedThumb || selectedThumb.classList.contains('active')) {
+              return;
+          }
 
-        thumbs.forEach(t => t.classList.remove('active'));
-        selectedThumb.classList.add('active');
+          thumbs.forEach(t => t.classList.remove('active'));
+          selectedThumb.classList.add('active');
 
-        const newVideoSrc = selectedThumb.getAttribute('data-video');
-        video.pause();
-        processingLoopStarted = false;
-        video.src = newVideoSrc;
-        video.load();
+          const newVideoSrc = selectedThumb.getAttribute('data-video');
+          console.log(`Switching main video to: ${newVideoSrc}`);
+
+          video.pause();
+          processingLoopStarted = false;
+          video.src = newVideoSrc;
+          video.load();
       }
 
       thumbs.forEach(thumb => {
-        thumb.addEventListener('click', () => switchVideo(thumb));
-        thumb.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            switchVideo(thumb);
-            thumb.blur();
-          }
+        thumb.addEventListener('click', function() {
+          switchVideo(this);
+        });
+        thumb.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                switchVideo(this);
+                this.blur();
+            }
         });
       });
 
@@ -705,10 +792,11 @@
 
       // --- Initial Setup ---
       updateHeaderButton();
-      document.querySelectorAll('#gallery .thumb video').forEach(thumbVideo => {
-        thumbVideo.muted = true;
-        thumbVideo.volume = 0;
+      document.querySelectorAll('.gallery .thumb video').forEach(thumbVideo => {
+          thumbVideo.muted = true;
+          thumbVideo.volume = 0;
       });
+
     });
   </script>
 </body>
