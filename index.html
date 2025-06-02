@@ -51,8 +51,8 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      max-height: 100vh;
-      overflow: hidden;
+      max-height: 100vh; 
+      overflow: hidden; 
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -68,17 +68,17 @@
     }
 
     .site-main {
-      flex-grow: 1;
+      flex-grow: 1; 
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-sm) var(--spacing-md);
+      gap: var(--spacing-md); 
+      padding: var(--spacing-sm) var(--spacing-md); 
       width: 100%;
-      max-width: 700px;
+      max-width: 700px; 
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden;
+      overflow: hidden; 
     }
     
     .site-title {
@@ -90,30 +90,16 @@
     }
 
     .contract-info {
-      background: var(--color-surface); 
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--border-radius-md); 
-      margin: 0 auto var(--spacing-md) auto;
-      display: inline-flex; 
-      align-items: center; 
-      gap: var(--spacing-sm);
-      font-size: var(--font-size-sm); 
-      font-weight: 500; 
-      box-shadow: var(--shadow-sm);
-      max-width: 90%; 
-      word-wrap: break-word; 
-      border: 1px solid var(--color-border);
+      background: var(--color-surface); padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-md); margin: 0 auto var(--spacing-md) auto;
+      display: inline-flex; align-items: center; gap: var(--spacing-sm);
+      font-size: var(--font-size-sm); font-weight: 500; box-shadow: var(--shadow-sm);
+      max-width: 90%; word-wrap: break-word; border: 1px solid var(--color-border);
     }
     #copyButton {
-      cursor: pointer; 
-      background: var(--color-primary); 
-      color: white; 
-      border: none;
-      border-radius: var(--border-radius-sm); 
-      padding: var(--spacing-xs) var(--spacing-sm);
-      font-size: var(--font-size-sm); 
-      font-weight: 500; 
-      transition: background 0.2s, transform 0.1s;
+      cursor: pointer; background: var(--color-primary); color: white; border: none;
+      border-radius: var(--border-radius-sm); padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-sm); font-weight: 500; transition: background 0.2s, transform 0.1s;
     }
     #copyButton:hover { background: color-mix(in srgb, var(--color-primary) 90%, black); }
     #copyButton:active { transform: scale(0.95); }
@@ -121,20 +107,12 @@
     #copyButton:focus-visible { outline: 2px solid var(--color-accent-bright); outline-offset: 2px; }
 
     .button {
-      display: inline-block; 
-      padding: var(--spacing-sm) var(--spacing-lg);
-      background: var(--color-primary); 
-      color: white; 
-      border-radius: var(--border-radius-md);
-      box-shadow: var(--shadow-md); 
-      cursor: pointer;
+      display: inline-block; padding: var(--spacing-sm) var(--spacing-lg);
+      background: var(--color-primary); color: white; border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-md); cursor: pointer;
       transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-      font-size: var(--font-size-base); 
-      font-weight: 500; 
-      border: none;
-      font-family: inherit; 
-      text-align: center; 
-      text-decoration: none;
+      font-size: var(--font-size-base); font-weight: 500; border: none;
+      font-family: inherit; text-align: center; text-decoration: none;
     }
     .button:hover { background: color-mix(in srgb, var(--color-primary) 85%, black); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
     .button:active { transform: translateY(0px) scale(0.98); box-shadow: var(--shadow-sm); }
@@ -146,118 +124,87 @@
     .onlyfans-button:hover { background: color-mix(in srgb, var(--color-accent-bright) 85%, black); }
 
     .controls-section {
-      flex-shrink: 0;
-      margin-bottom: var(--spacing-sm);
+      flex-shrink: 0; 
     }
 
-    /* VIDEO PLAYER SECTION - MODIFIED */
-    .video-player-section {
-      width: 100%;
-      flex: 1 1 auto;
-      display: flex;
+    .video-player-outlet { 
+      flex: 1 1 auto;   
+      width: 100%;      
+      min-height: 0;    
+      display: flex;    
       justify-content: center;
       align-items: center;
-      min-height: 0;
-      overflow: hidden;
-      position: relative;
+      position: relative; 
+      overflow: hidden;   
     }
-    
+
     #container { 
-      position: relative;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
+      position: relative; 
+      width: 100%;        
+      max-width: 100%;    
+      max-height: 100%;   
+      /* 'aspect-ratio' will be set by JS */
       background-color: #000; 
       border: 2px solid var(--color-border);
       border-radius: var(--border-radius-lg);
-      overflow: hidden;
+      overflow: hidden; 
       box-shadow: var(--shadow-lg);
-      will-change: transform; 
-      transform: translateZ(0); 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      will-change: transform, aspect-ratio; 
+      transform: translateZ(0);
     }
-    
+
     #container video, 
     #overlayCanvas {
       position: absolute; 
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      top: 0;
-      left: 0;
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
+      display: block;
+      object-fit: cover; 
     }
-    
     #overlayCanvas { 
+      object-fit: unset; 
       pointer-events: auto; 
-      cursor: pointer;
+      cursor: default;
     }
 
     .gallery-section {
-      width: 100%;
-      flex-shrink: 0;
-      padding-top: var(--spacing-sm);
-      padding-bottom: var(--spacing-sm);
+      width: 100%; 
+      flex-shrink: 0; 
+      padding-top: var(--spacing-sm); 
+      padding-bottom: var(--spacing-sm); 
     }
-    
     #gallery {
-      display: flex; 
-      flex-wrap: nowrap; 
-      justify-content: flex-start; 
-      gap: var(--spacing-sm); 
-      padding: var(--spacing-sm); 
-      overflow-x: auto; 
-      -webkit-overflow-scrolling: touch; 
-      scrollbar-width: thin; 
+      display: flex; flex-wrap: nowrap; justify-content: flex-start; 
+      gap: var(--spacing-sm); padding: var(--spacing-sm); overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; scrollbar-width: thin; 
       scrollbar-color: var(--color-primary) var(--color-surface); 
-      background: var(--color-surface); 
-      border-radius: var(--border-radius-md);
+      background: var(--color-surface); border-radius: var(--border-radius-md);
       border: 1px solid var(--color-border);
     }
-    
     #gallery::-webkit-scrollbar { height: 8px; }
     #gallery::-webkit-scrollbar-track { background: var(--color-surface); border-radius: var(--border-radius-sm); }
     #gallery::-webkit-scrollbar-thumb { background-color: var(--color-primary); border-radius: var(--border-radius-sm); border: 2px solid var(--color-surface); }
     
     .thumb {
-      height: clamp(50px, 8vh, 80px);
-      flex-shrink: 0; 
-      border: 2px solid transparent;
-      border-radius: var(--border-radius-sm); 
-      overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; 
-      cursor: pointer; 
-      background-color: #333; 
-      position: relative;
-      box-shadow: var(--shadow-sm); 
-      will-change: transform; 
+      height: clamp(50px, 8vh, 80px); 
+      flex-shrink: 0; border: 2px solid transparent;
+      border-radius: var(--border-radius-sm); overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, aspect-ratio 0.2s; 
+      cursor: pointer; background-color: #333; position: relative;
+      box-shadow: var(--shadow-sm); will-change: aspect-ratio, transform; 
     }
-    
     .thumb:hover { transform: scale(1.05); box-shadow: var(--shadow-md); }
     .thumb.active { border-color: var(--color-accent-bright); box-shadow: 0 0 10px var(--color-accent-bright); transform: scale(1.05); }
     .thumb:focus-visible { outline: 2px solid var(--color-accent-bright); outline-offset: 2px; transform: scale(1.05); border-color: var(--color-accent-bright); }
-    
-    .thumb video {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-    }
+    .thumb video { width: 100%; height: 100%; display: block; object-fit: cover; }
 
     .site-footer { padding-top: 0; }
 
     @media (max-width: 768px) {
-      .thumb { height: clamp(50px, 8vh, 70px); }
+      .thumb { height: clamp(50px, 8vh, 70px); } 
     }
-    
     @media (max-width: 480px) {
-      :root { 
-        --spacing-lg: 1rem; 
-        --spacing-xl: 1.5rem; 
-        --spacing-md: 0.75rem; 
-      }
+      :root { --spacing-lg: 1rem; --spacing-xl: 1.5rem; --spacing-md: 0.75rem; }
       .site-main { gap: var(--spacing-sm); padding: var(--spacing-xs) var(--spacing-sm); }
       .site-header, .site-footer { padding: var(--spacing-sm) var(--spacing-md); }
       .button { padding: calc(var(--spacing-sm) * 0.8) calc(var(--spacing-lg) * 0.8); }
@@ -266,7 +213,6 @@
       .thumb { height: clamp(45px, 7vh, 60px); }
     }
     
-    /* Extremely short viewports */
     @media (max-height: 500px) {
         .site-main { gap: var(--spacing-xs); }
         .thumb { height: clamp(40px, 6vh, 50px); }
@@ -276,24 +222,6 @@
             padding: var(--spacing-xs) var(--spacing-sm);
         }
         .contract-info { margin-bottom: var(--spacing-sm); }
-    }
-    
-    /* New media query for very tall screens */
-    @media (min-height: 800px) {
-        .thumb { height: clamp(60px, 10vh, 100px); }
-    }
-    
-    /* Aspect ratio warning for debugging */
-    .aspect-ratio-warning {
-      display: none;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 5px;
-      font-size: 12px;
-      z-index: 1000;
     }
   </style>
 </head>
@@ -312,16 +240,15 @@
       <button id="bagToggle" type="button" class="button bag-toggle-button" aria-pressed="true">Click to remove the bag</button>
     </section>
 
-    <section class="video-player-section">
+    <div class="video-player-outlet"> 
       <div id="container" class="video-container">
         <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
           <source src="1.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
         <canvas id="overlayCanvas"></canvas>
-        <div id="aspectRatioWarning" class="aspect-ratio-warning"></div>
       </div>
-    </section>
+    </div>
 
     <section class="gallery-section">
       <h2 class="visually-hidden">Video Gallery</h2>
@@ -345,15 +272,15 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const video = document.getElementById('video');
+      const video = document.getElementById('video'); // The <video> element itself
       const canvas = document.getElementById('overlayCanvas');
       const ctx = canvas.getContext('2d', { alpha: true });
       const bagToggle = document.getElementById('bagToggle');
       const copyButton = document.getElementById('copyButton');
       const addressValueSpan = document.getElementById('addressValue');
       const gallery = document.getElementById('gallery');
-      const videoContainer = document.getElementById('container');
-      const aspectRatioWarning = document.getElementById('aspectRatioWarning');
+      // videoContainer is the div with id="container" that gets aspect-ratio set
+      const videoContainer = document.getElementById('container'); 
 
       const bagImage = new Image();
       bagImage.src = 'bag.png';
@@ -418,6 +345,7 @@
       });
       
       function setCanvasDimensions() {
+        // videoContainer is the div#container
         const containerWidth = videoContainer.clientWidth;
         const containerHeight = videoContainer.clientHeight;
         
@@ -425,21 +353,34 @@
             if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
                 canvas.width = containerWidth;
                 canvas.height = containerHeight;
-                // Update aspect ratio warning
-                aspectRatioWarning.textContent = `Container: ${containerWidth}x${containerHeight} | Video: ${video.videoWidth}x${video.videoHeight}`;
-                aspectRatioWarning.style.display = 'block';
-                setTimeout(() => { aspectRatioWarning.style.display = 'none'; }, 3000);
+                console.log(`Canvas resized to: ${canvas.width}x${canvas.height} (matching div#container)`);
             }
+        } else {
+            // This might happen if the container is not yet rendered or display:none
+            console.warn("div#container dimensions for canvas are zero. Canvas not sized yet.");
         }
       }
 
+      // Listen to the <video> element for metadata
       video.addEventListener('loadedmetadata', function() {
-        // Remove aspect ratio setting from container
-        videoContainer.style.aspectRatio = '';
+        console.log(`Main video metadata: ${this.videoWidth}x${this.videoHeight}`);
+        if (this.videoWidth > 0 && this.videoHeight > 0) {
+            // Set aspect-ratio on the div#container
+            videoContainer.style.aspectRatio = `${this.videoWidth} / ${this.videoHeight}`;
+            console.log(`div#container AR set to ${this.videoWidth}/${this.videoHeight}`);
+        } else {
+            console.warn("Main video dimensions reported as zero. Using fallback AR for div#container.");
+            videoContainer.style.aspectRatio = '16 / 9'; 
+        }
+        // DOM needs to reflow with the new aspect-ratio before canvas is sized.
+        // rAF helps wait for the next paint/layout cycle.
         requestAnimationFrame(setCanvasDimensions);
       });
 
       window.addEventListener('resize', () => {
+          // On resize, the CSS rules for .video-player-outlet and #container
+          // (especially max-height: 100%) should handle scaling.
+          // We just need to ensure canvas matches #container's final dimensions.
           requestAnimationFrame(setCanvasDimensions);
       });
       
@@ -505,23 +446,33 @@
         if (timestamp - lastFrameTime < frameInterval) return; 
         lastFrameTime = timestamp;
         if (video.readyState >= video.HAVE_CURRENT_DATA && !video.paused && !video.ended) {
-          if (canvas.width > 0 && canvas.height > 0) {
-            try { await faceMesh.send({ image: video }); }
+          if (canvas.width > 0 && canvas.height > 0) { // Ensure canvas is sized
+            try { await faceMesh.send({ image: video }); } // Send the <video> element
             catch (error) { console.error("Error sending frame to Face Mesh:", error); }
           }
         }
       }
       
-      const ro = new ResizeObserver(entries => { 
-          for (let entry of entries) { if (entry.target === videoContainer) requestAnimationFrame(setCanvasDimensions); }
+      // ResizeObserver on div#container to react if its computed size changes
+      // This is a fallback / secondary mechanism to window.resize
+      const playerResizeObserver = new ResizeObserver(entries => { 
+          for (let entry of entries) { 
+              if (entry.target === videoContainer) {
+                  // console.log('div#container resized by observer, updating canvas');
+                  requestAnimationFrame(setCanvasDimensions); 
+              }
+          }
       });
-      ro.observe(videoContainer);
+      playerResizeObserver.observe(videoContainer);
 
       video.addEventListener('canplay', () => {
+          // console.log("Video 'canplay' event fired.");
+          // Aspect ratio is set on 'loadedmetadata'. Canvas syncs via rAF or ResizeObserver.
           if (!processingLoopStarted) {
+              console.log("Starting Face Mesh processing loop.");
               requestAnimationFrame(processVideo); processingLoopStarted = true;
           }
-          video.play().catch(e => console.warn("Autoplay prevented:", e.message));
+          video.play().catch(e => console.warn("Autoplay/Play prevented:", e.message));
       }); 
 
       const thumbs = gallery.querySelectorAll('.thumb');
@@ -530,8 +481,10 @@
           thumbs.forEach(t => t.classList.remove('active'));
           selectedThumb.classList.add('active');
           const newVideoSrc = selectedThumb.getAttribute('data-video');
+          console.log(`Switching main video to: ${newVideoSrc}`);
           video.pause(); processingLoopStarted = false; 
           video.src = newVideoSrc; video.load(); 
+          // 'loadedmetadata' on main video will handle AR and canvas for the new video
       }
 
       thumbs.forEach(thumbDiv => {
@@ -541,12 +494,14 @@
                 if (thumbVideoEl.videoWidth > 0 && thumbVideoEl.videoHeight > 0) {
                     thumbDiv.style.aspectRatio = `${thumbVideoEl.videoWidth} / ${thumbVideoEl.videoHeight}`;
                 } else {
+                    console.warn(`Thumb video ${thumbVideoEl.src} has zero dimensions. Fallback AR.`);
                     thumbDiv.style.aspectRatio = '16 / 9'; 
                 }
             };
             thumbVideoEl.addEventListener('loadedmetadata', setThumbAR);
-            if (thumbVideoEl.readyState >= 1) { setThumbAR(); }
+            if (thumbVideoEl.readyState >= 1) { setThumbAR(); } // If already loaded
              thumbVideoEl.addEventListener('error', () => {
+                console.error(`Error loading thumbnail video: ${thumbVideoEl.src}`);
                 thumbDiv.style.aspectRatio = '16 / 9'; thumbDiv.style.backgroundColor = '#222';
             });
         }
@@ -557,7 +512,10 @@
       updateHeaderButton(); 
       document.querySelectorAll('#gallery .thumb video').forEach(tv => { tv.muted = true; tv.volume = 0; });
       
-      if (video.readyState >= 1) { video.dispatchEvent(new Event('loadedmetadata')); }
+      // If main video metadata already loaded (e.g. from cache)
+      if (video.readyState >= 1) { // HAVE_METADATA or more
+        video.dispatchEvent(new Event('loadedmetadata'));
+      }
 
     });
   </script>
