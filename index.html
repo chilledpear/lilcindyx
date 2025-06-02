@@ -51,8 +51,8 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      max-height: 100vh; /* Try to enforce no scroll on body */
-      overflow: hidden; /* Prevent body scroll */
+      max-height: 100vh; 
+      overflow: hidden; 
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -68,17 +68,17 @@
     }
 
     .site-main {
-      flex-grow: 1; /* Takes up available vertical space */
+      flex-grow: 1; 
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--spacing-md); /* Reduced gap for tighter fit */
-      padding: var(--spacing-sm) var(--spacing-md); /* Reduced padding */
+      gap: var(--spacing-md); 
+      padding: var(--spacing-sm) var(--spacing-md); 
       width: 100%;
       max-width: 700px; 
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden; /* Prevent internal overflow from breaking layout */
+      overflow: hidden; 
     }
     
     .site-title {
@@ -124,22 +124,25 @@
     .onlyfans-button:hover { background: color-mix(in srgb, var(--color-accent-bright) 85%, black); }
 
     .controls-section {
-      flex-shrink: 0; /* This section should not shrink vertically */
+      flex-shrink: 0; 
     }
 
     .video-player-section {
       width: 100%;
-      flex: 1 1 auto; /* Allow grow and shrink, auto basis */
+      flex: 1 1 auto; 
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 0; /* CRUCIAL for allowing shrinking below intrinsic content height */
-      overflow: hidden; /* Ensure children don't overflow this shrinking container */
+      align-items: center; 
+      min-height: 0; 
+      overflow: hidden; 
     }
     #container { 
       position: relative;
-      width: 100%; /* Fill the .video-player-section's allocated width */
-      max-width: 100%; /* Don't overflow .video-player-section */
+      width: 100%; 
+      /* The height will be dictated by the width and the JS-set aspect-ratio. */
+      /* No explicit height, max-height, or flex properties that would impose a height. */
+      max-width: 100%; /* Constrained by parent's width if parent is narrower */
+      
       /* aspect-ratio will be set by JS */
       background-color: #000; 
       border: 2px solid var(--color-border);
@@ -158,10 +161,10 @@
     #overlayCanvas { cursor: default; pointer-events: auto; object-fit: unset; }
 
     .gallery-section {
-      width: 100%; /* Will be constrained by site-main's max-width */
-      flex-shrink: 0; /* Gallery's vertical size is fixed by its content */
-      padding-top: var(--spacing-sm); /* Added spacing above gallery */
-      padding-bottom: var(--spacing-sm); /* Added spacing below gallery */
+      width: 100%; 
+      flex-shrink: 0; 
+      padding-top: var(--spacing-sm); 
+      padding-bottom: var(--spacing-sm); 
     }
     #gallery {
       display: flex; flex-wrap: nowrap; justify-content: flex-start; 
@@ -176,8 +179,7 @@
     #gallery::-webkit-scrollbar-thumb { background-color: var(--color-primary); border-radius: var(--border-radius-sm); border: 2px solid var(--color-surface); }
     
     .thumb {
-      height: clamp(50px, 8vh, 80px); /* Slightly reduced max for tighter screens */
-      /* aspect-ratio will be set by JS */
+      height: clamp(50px, 8vh, 80px); 
       flex-shrink: 0; border: 2px solid transparent;
       border-radius: var(--border-radius-sm); overflow: hidden;
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, aspect-ratio 0.2s; 
@@ -192,7 +194,7 @@
     .site-footer { padding-top: 0; }
 
     @media (max-width: 768px) {
-      .thumb { height: clamp(50px, 8vh, 70px); } /* Further adjust for medium screens */
+      .thumb { height: clamp(50px, 8vh, 70px); } 
     }
     @media (max-width: 480px) {
       :root { --spacing-lg: 1rem; --spacing-xl: 1.5rem; --spacing-md: 0.75rem; }
@@ -204,7 +206,6 @@
       .thumb { height: clamp(45px, 7vh, 60px); }
     }
     
-    /* Extremely short viewports */
     @media (max-height: 500px) {
         .site-main { gap: var(--spacing-xs); }
         .thumb { height: clamp(40px, 6vh, 50px); }
