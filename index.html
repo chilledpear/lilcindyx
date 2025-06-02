@@ -48,189 +48,200 @@
       font-family: var(--font-primary);
       background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
       color: var(--color-text);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      max-height: 100vh; 
-      overflow: hidden; 
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      /* display: flex; flex-direction: column; min-height: 100vh; */ /* Reverting body flex for old layout */
+      text-align: center;
+      padding: var(--spacing-lg); /* Use new spacing vars */
+      padding-bottom: calc(var(--spacing-lg) * 2); 
       overscroll-behavior-y: contain; 
     }
     .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     
-    .site-header, .site-footer {
-      flex-shrink: 0;
-      padding: var(--spacing-md) var(--spacing-lg);
+    /* Using <header>, <main>, <footer> for structure but not for primary flex layout of body */
+    .site-header, .site-footer-container { /* Renamed #footer to avoid conflict with potential <footer> tag */
+      width: 100%;
       text-align: center;
-      width: 100%;
     }
-
     .site-main {
-      flex-grow: 1; 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--spacing-md); 
-      padding: var(--spacing-sm) var(--spacing-md); 
-      width: 100%;
-      max-width: 700px; 
-      margin-left: auto;
-      margin-right: auto;
-      overflow: hidden; /* Crucial for constraining flex children */
+        width: 100%;
+        max-width: 700px; /* Max content width from new UI */
+        margin-left: auto;
+        margin-right: auto;
     }
     
-    .site-title {
+    .site-title { /* Old .top-heading, adapted */
       font-size: var(--font-size-xl);
       font-weight: 700;
       color: var(--color-text);
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-      margin-bottom: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
     }
 
-    .contract-info {
-      background: var(--color-surface); padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--border-radius-md); margin: 0 auto var(--spacing-md) auto;
-      display: inline-flex; align-items: center; gap: var(--spacing-sm);
-      font-size: var(--font-size-sm); font-weight: 500; box-shadow: var(--shadow-sm);
-      max-width: 90%; word-wrap: break-word; border: 1px solid var(--color-border);
+    .contract-info { /* Old #contractAddressContainer, adapted */
+      background: var(--color-surface);
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-radius: var(--border-radius-md);
+      margin: 0 auto var(--spacing-lg) auto;
+      display: inline-block;
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      box-shadow: var(--shadow-md);
+      max-width: 90%;
+      word-wrap: break-word;
+      border: 1px solid var(--color-border);
     }
-    #copyButton {
-      cursor: pointer; background: var(--color-primary); color: white; border: none;
-      border-radius: var(--border-radius-sm); padding: var(--spacing-xs) var(--spacing-sm);
-      font-size: var(--font-size-sm); font-weight: 500; transition: background 0.2s, transform 0.1s;
+    #copyButton { /* Old #copyButton styling, adapted */
+      cursor: pointer;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: background 0.2s, transform 0.1s;
+      margin-left: var(--spacing-sm);
     }
     #copyButton:hover { background: color-mix(in srgb, var(--color-primary) 90%, black); }
     #copyButton:active { transform: scale(0.95); }
     #copyButton:disabled { background: var(--color-text-muted); cursor: not-allowed; }
     #copyButton:focus-visible { outline: 2px solid var(--color-accent-bright); outline-offset: 2px; }
 
-    .button {
-      display: inline-block; padding: var(--spacing-sm) var(--spacing-lg);
+    .button { /* General button style from new UI for bag toggle and OF */
+      display: inline-block; padding: var(--spacing-md) var(--spacing-lg);
       background: var(--color-primary); color: white; border-radius: var(--border-radius-md);
       box-shadow: var(--shadow-md); cursor: pointer;
       transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-      font-size: var(--font-size-base); font-weight: 500; border: none;
+      font-size: var(--font-size-md); font-weight: 500; border: none;
       font-family: inherit; text-align: center; text-decoration: none;
     }
     .button:hover { background: color-mix(in srgb, var(--color-primary) 85%, black); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
     .button:active { transform: translateY(0px) scale(0.98); box-shadow: var(--shadow-sm); }
     .button:focus-visible { outline: 3px solid var(--color-accent-bright); outline-offset: 2px; }
-
-    .bag-toggle-button { background: var(--color-secondary); font-size: var(--font-size-md); }
-    .bag-toggle-button:hover { background: color-mix(in srgb, var(--color-secondary) 85%, black); }
-    .onlyfans-button { background: var(--color-accent-bright); font-size: var(--font-size-md); }
-    .onlyfans-button:hover { background: color-mix(in srgb, var(--color-accent-bright) 85%, black); }
-
-    .controls-section {
-      flex-shrink: 0; 
+    
+    .bag-toggle-button { /* Specific for bag toggle */
+      background: var(--color-secondary);
+      margin-bottom: var(--spacing-lg);
+    }
+    .onlyfans-button { /* Specific for OnlyFans */
+      background: var(--color-accent-bright);
     }
 
-    #container { 
-      flex: 1 1 auto; 
-      min-height: 0;  
-      width: 100%;    
-      position: relative; 
-      
-      /* 'aspect-ratio' will be set by JS */
-      background-color: #000; 
-      border: 2px solid var(--color-border);
-      border-radius: var(--border-radius-lg);
-      overflow: hidden; 
-      box-shadow: var(--shadow-lg);
-      will-change: transform, aspect-ratio; 
-      transform: translateZ(0);
-    }
 
-    #container video, 
-    #overlayCanvas {
-      position: absolute; 
-      top: 0; left: 0; 
-      width: 100%; height: 100%; 
+    /* Video Container - OLD SIZING LOGIC */
+    #container {
+      position: relative;
+      margin: 0 auto var(--spacing-lg) auto; /* Use new spacing */
+      max-width: 500px; /* From old version */
+      width: 100%;
+      border: 2px solid var(--color-border); /* New UI border */
+      border-radius: var(--border-radius-lg); /* New UI radius */
+      overflow: hidden;
+      box-shadow: var(--shadow-lg); /* New UI shadow */
+    }
+    #container video { /* #video */
+      width: 100%;
+      height: auto; /* Critical for old aspect ratio method */
       display: block;
-      object-fit: cover; 
+      /* object-fit: cover; /* Not strictly needed if height: auto works, but can be fallback */
     }
-    #overlayCanvas { 
-      object-fit: unset; 
-      pointer-events: auto; 
+    #overlayCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;  /* Will stretch to fill #container's display size */
+      height: 100%; /* Will stretch to fill #container's display size */
       cursor: default;
     }
 
-    .gallery-section {
-      width: 100%; 
-      flex-shrink: 0; 
-      padding-top: var(--spacing-sm); 
-      padding-bottom: var(--spacing-sm); 
-    }
+    /* Gallery styling - Based on OLD version, adapted with new UI elements */
     #gallery {
-      display: flex; flex-wrap: nowrap; justify-content: flex-start; 
-      gap: var(--spacing-sm); padding: var(--spacing-sm); overflow-x: auto; 
-      -webkit-overflow-scrolling: touch; scrollbar-width: thin; 
+      margin-top: var(--spacing-lg);
+      display: flex;
+      /* flex-wrap: wrap; /* Default for desktop from old */
+      /* justify-content: center; /* Default for desktop from old */
+      gap: var(--spacing-sm);
+      /* For desktop, let's make it horizontally scrollable like mobile for consistency and space saving */
+      flex-wrap: nowrap; 
+      justify-content: flex-start; 
+      padding: var(--spacing-sm); 
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch; 
+      scrollbar-width: thin; 
       scrollbar-color: var(--color-primary) var(--color-surface); 
-      background: var(--color-surface); border-radius: var(--border-radius-md);
+      background: var(--color-surface);
+      border-radius: var(--border-radius-md);
       border: 1px solid var(--color-border);
     }
-    #gallery::-webkit-scrollbar { height: 8px; }
-    #gallery::-webkit-scrollbar-track { background: var(--color-surface); border-radius: var(--border-radius-sm); }
-    #gallery::-webkit-scrollbar-thumb { background-color: var(--color-primary); border-radius: var(--border-radius-sm); border: 2px solid var(--color-surface); }
-    
     .thumb {
-      height: clamp(50px, 8vh, 80px); 
-      flex-shrink: 0; border: 2px solid transparent;
-      border-radius: var(--border-radius-sm); overflow: hidden;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, aspect-ratio 0.2s; 
-      cursor: pointer; background-color: #333; position: relative;
-      box-shadow: var(--shadow-sm); will-change: aspect-ratio, transform; 
+      /* Old fixed size, but we want it more responsive like new UI thumbnails */
+      /* width: 150px; height: 100px; */
+      height: clamp(60px, 10vh, 100px); /* Responsive height from new UI */
+      /* aspect-ratio will be set by JS for thumbnails too */
+      flex-shrink: 0; 
+      border: 2px solid transparent; /* New UI active state managed by border-color */
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s, aspect-ratio 0.2s;
+      cursor: pointer;
+      background-color: #333; 
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      will-change: aspect-ratio, transform;
     }
     .thumb:hover { transform: scale(1.05); box-shadow: var(--shadow-md); }
     .thumb.active { border-color: var(--color-accent-bright); box-shadow: 0 0 10px var(--color-accent-bright); transform: scale(1.05); }
     .thumb:focus-visible { outline: 2px solid var(--color-accent-bright); outline-offset: 2px; transform: scale(1.05); border-color: var(--color-accent-bright); }
-    .thumb video { width: 100%; height: 100%; display: block; object-fit: cover; }
-
-    .site-footer { padding-top: 0; }
-
-    @media (max-width: 768px) {
-      .thumb { height: clamp(50px, 8vh, 70px); } 
+    .thumb video {
+      width: 100%; height: 100%; display: block; object-fit: cover;
     }
-    @media (max-width: 480px) {
-      :root { --spacing-lg: 1rem; --spacing-xl: 1.5rem; --spacing-md: 0.75rem; }
-      .site-main { gap: var(--spacing-sm); padding: var(--spacing-xs) var(--spacing-sm); }
-      .site-header, .site-footer { padding: var(--spacing-sm) var(--spacing-md); }
-      .button { padding: calc(var(--spacing-sm) * 0.8) calc(var(--spacing-lg) * 0.8); }
-      .contract-info { padding: calc(var(--spacing-sm)*0.8) calc(var(--spacing-md)*0.8); }
-      #copyButton { padding: calc(var(--spacing-xs)*0.8) calc(var(--spacing-sm)*0.8); }
-      .thumb { height: clamp(45px, 7vh, 60px); }
+
+    .site-footer-container { /* Old #footer, adapted */
+      margin-top: var(--spacing-xl);
     }
-    
-    @media (max-height: 500px) {
-        .site-main { gap: var(--spacing-xs); }
-        .thumb { height: clamp(40px, 6vh, 50px); }
-        .site-title { font-size: var(--font-size-lg); margin-bottom: var(--spacing-xs);}
-        .button, .bag-toggle-button, .onlyfans-button { 
-            font-size: var(--font-size-sm);
-            padding: var(--spacing-xs) var(--spacing-sm);
-        }
-        .contract-info { margin-bottom: var(--spacing-sm); }
+
+    /* Mobile adjustments from OLD, adapted */
+    @media (max-width: 600px) {
+       .site-title {
+           font-size: var(--font-size-lg); /* Use clamped size */
+           margin-bottom: var(--spacing-lg);
+       }
+      #container {
+        max-width: 100%; /* Full width on mobile from old */
+        margin-bottom: var(--spacing-md);
+      }
+      /* Gallery already set to horizontal scroll for all sizes now */
+      .thumb {
+        /* Height already clamped, AR will adjust width */
+      }
+       .bag-toggle-button { /* Target specific button */
+         font-size: var(--font-size-md);
+         padding: var(--spacing-sm) var(--spacing-md);
+       }
+       .contract-info {
+         font-size: var(--font-size-sm);
+         padding: var(--spacing-sm) var(--spacing-md);
+       }
+        .onlyfans-button {
+         font-size: var(--font-size-md);
+         padding: var(--spacing-sm) var(--spacing-md);
+       }
     }
   </style>
 </head>
 <body>
 
   <header class="site-header">
-    <h1 class="site-title">OnlyFangs</h1>
-    <div id="contractAddressContainer" class="contract-info">
+    <h1 class="site-title">OnlyFangs</h1> <!-- Changed title back -->
+    <div class="contract-info">
       Contract: <span id="addressValue">YOUR_ADDRESS_HERE</span>
       <button id="copyButton" title="Copy Address">Copy</button>
     </div>
   </header>
 
   <main class="site-main">
-    <section class="controls-section">
-      <button id="bagToggle" type="button" class="button bag-toggle-button" aria-pressed="true">Click to remove the bag</button>
-    </section>
+    <button id="bagToggle" type="button" class="button bag-toggle-button" aria-pressed="true">Click to remove the bag</button>
 
-    <div id="container" class="video-container"> <!-- This is now a direct flex child of site-main -->
+    <div id="container"> <!-- This is the video player container -->
       <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
         <source src="1.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -238,9 +249,7 @@
       <canvas id="overlayCanvas"></canvas>
     </div>
 
-    <section class="gallery-section">
-      <h2 class="visually-hidden">Video Gallery</h2>
-      <div id="gallery" class="video-gallery">
+    <div id="gallery"> <!-- Gallery container -->
         <div class="thumb active" data-video="1.mp4" tabindex="0"><video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
         <div class="thumb" data-video="2.mp4" tabindex="0"><video src="2.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
         <div class="thumb" data-video="3.mp4" tabindex="0"><video src="3.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
@@ -248,13 +257,12 @@
         <div class="thumb" data-video="5.mp4" tabindex="0"><video src="5.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
         <div class="thumb" data-video="6.mp4" tabindex="0"><video src="6.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
         <div class="thumb" data-video="7.mp4" tabindex="0"><video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video></div>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
+  <div class="site-footer-container"> <!-- Was #footer -->
     <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="button onlyfans-button">Cindy OF</a>
-  </footer>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
@@ -262,12 +270,13 @@
     document.addEventListener('DOMContentLoaded', function() {
       const video = document.getElementById('video'); 
       const canvas = document.getElementById('overlayCanvas');
-      const ctx = canvas.getContext('2d', { alpha: true });
+      const ctx = canvas.getContext('2d', { alpha: true }); // Keep alpha for bag
       const bagToggle = document.getElementById('bagToggle');
       const copyButton = document.getElementById('copyButton');
       const addressValueSpan = document.getElementById('addressValue');
       const gallery = document.getElementById('gallery');
-      const videoContainer = document.getElementById('container'); // This is the div#container
+      // No separate videoContainer variable for #container, as #container is the main one here.
+      // const videoContainer = document.getElementById('container'); // This is what JS targets
 
       const bagImage = new Image();
       bagImage.src = 'bag.png';
@@ -310,7 +319,7 @@
       copyButton.addEventListener('click', () => {
         const addressToCopy = addressValueSpan.textContent;
         if (!addressToCopy || addressToCopy === 'YOUR_ADDRESS_HERE') {
-            copyButton.textContent = 'Not Set!';
+            copyButton.textContent = 'Not Set!'; // Using new UI feedback
             setTimeout(() => { copyButton.textContent = 'Copy'; }, 2000);
             return;
         }
@@ -331,58 +340,47 @@
         });
       });
       
-      function setCanvasDimensions() {
-        const containerWidth = videoContainer.clientWidth;
-        const containerHeight = videoContainer.clientHeight;
-        
-        if (containerWidth > 0 && containerHeight > 0) {
-            if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
-                canvas.width = containerWidth;
-                canvas.height = containerHeight;
-                // console.log(`Canvas resized to: ${canvas.width}x${canvas.height} (matching div#container)`);
-            }
+      // OLD Canvas Sizing Logic (crucial for this merge)
+      video.addEventListener('loadedmetadata', () => {
+        console.log("Main video metadata loaded. Intrinsic: " + video.videoWidth + "x" + video.videoHeight);
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+             // Set canvas RENDERING/DRAWING dimensions to match video's actual pixels
+             canvas.width = video.videoWidth;
+             canvas.height = video.videoHeight;
+             console.log(`Canvas DRAWING surface set to: ${canvas.width}x${canvas.height}`);
         } else {
-            // console.warn("div#container dimensions for canvas are zero. Canvas not sized yet.");
+            console.warn("Video dimensions reported as 0. Canvas drawing surface not set yet.");
         }
-      }
-
-      video.addEventListener('loadedmetadata', function() {
-        // console.log(`Main video metadata: ${this.videoWidth}x${this.videoHeight}`);
-        if (this.videoWidth > 0 && this.videoHeight > 0) {
-            videoContainer.style.aspectRatio = `${this.videoWidth} / ${this.videoHeight}`;
-            // console.log(`div#container AR set to ${this.videoWidth}/${this.videoHeight}`);
-        } else {
-            // console.warn("Main video dimensions reported as zero. Using fallback AR for div#container.");
-            videoContainer.style.aspectRatio = '16 / 9'; 
-        }
-        requestAnimationFrame(setCanvasDimensions);
-      });
-
-      window.addEventListener('resize', () => {
-          requestAnimationFrame(setCanvasDimensions);
+        // The canvas CSS (width:100%, height:100%) will make it DISPLAY correctly within #container.
       });
       
+      // No window.resize handling for canvas specific to this old method,
+      // as #container's size is determined by max-width and video's auto height.
+
       video.onerror = (e) => console.error("Error loading main video:", video.error?.message || 'Unknown video error');
       video.onstalled = () => console.warn("Main video stalled.");
 
       const faceMesh = new FaceMesh({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}` });
+      // Using refineLandmarks: false from recent versions for performance, old had true
       faceMesh.setOptions({ maxNumFaces: 1, refineLandmarks: false, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
       faceMesh.onResults(onResults);
 
       function onResults(results) {
          if (!ctx) return;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Canvas is cleared based on its drawing dimensions (video.videoWidth/Height)
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
         bagRect = null; 
 
         if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
           const landmarks = results.multiFaceLandmarks[0];
-          const viewWidth = canvas.width; 
-          const viewHeight = canvas.height;
-          if (viewWidth === 0 || viewHeight === 0) return; 
+          // Use canvas.width/height which are video's intrinsic dimensions for calculations
+          const videoActualWidth = canvas.width; 
+          const videoActualHeight = canvas.height;
+          if (videoActualWidth === 0 || videoActualHeight === 0) return; 
 
-          let minX = viewWidth, minY = viewHeight, maxX = 0, maxY = 0;
+          let minX = videoActualWidth, minY = videoActualHeight, maxX = 0, maxY = 0;
           for (const lm of landmarks) {
-              const px = lm.x * viewWidth; const py = lm.y * viewHeight;
+              const px = lm.x * videoActualWidth; const py = lm.y * videoActualHeight;
               if (px < minX) minX = px; if (py < minY) minY = py;
               if (px > maxX) maxX = px; if (py > maxY) maxY = py;
           }
@@ -398,9 +396,27 @@
           if (useBag && bagImage.complete && bagImage.naturalWidth > 0) {
              try { ctx.drawImage(bagImage, bagX, bagY, bagWidth, bagHeight); }
              catch (drawError) { console.error("Error drawing bag image:", drawError); }
+             
+             // Hover/click on canvas needs to be relative to displayed size, not drawing surface.
+             // This part of the old logic might need adjustment if canvas display size differs from drawing size significantly.
+             // However, since canvas is 100% width/height of #container, and #container's width drives the video's display width,
+             // e.offsetX/Y should scale correctly *if* the drawing surface (canvas.width/height) is what the bag is drawn onto.
+             // The coordinates from landmarks are 0-1, scaled by canvas.width/height. So bagRect is in canvas pixel space.
+             // e.offsetX/Y are also in displayed canvas pixel space. If canvas is scaled by CSS, these might mismatch.
+             // For this old method, canvas CSS width/height are 100% of parent.
+             // And landmarks are based on canvas.width/height (video's intrinsic).
+             // The bag is drawn onto this intrinsic-sized canvas.
+             // The click detection should remain correct if the displayed canvas maps 1:1 or scales proportionally.
              canvas.onmousemove = (e) => {
-                 if (useBag && bagRect && e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
-                     e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height) {
+                 // Convert e.offsetX/Y to the coordinate system of the canvas's drawing surface
+                 const rect = canvas.getBoundingClientRect();
+                 const scaleX = canvas.width / rect.width;
+                 const scaleY = canvas.height / rect.height;
+                 const canvasX = (e.clientX - rect.left) * scaleX;
+                 const canvasY = (e.clientY - rect.top) * scaleY;
+
+                 if (useBag && bagRect && canvasX >= bagRect.x && canvasX <= bagRect.x + bagRect.width &&
+                     canvasY >= bagRect.y && canvasY <= bagRect.y + bagRect.height) {
                     if (canvas.style.cursor !== 'pointer') canvas.style.cursor = 'pointer';
                  } else { if (canvas.style.cursor !== 'default') canvas.style.cursor = 'default'; }
              };
@@ -418,12 +434,25 @@
         }
       }
 
-      let lastFrameTime = 0; const targetFPS = 30; const frameInterval = 1000 / targetFPS;
-      async function processVideo(timestamp) {
-        requestAnimationFrame(processVideo); 
-        if (timestamp - lastFrameTime < frameInterval) return; 
+      // Video processing loop, adapted from old version (no explicit rAF timing)
+      // but wrapped in rAF for modern practice.
+      let lastFrameTime = 0; const targetFPS = 30; const frameInterval = 1000 / targetFPS; // From new
+      async function processVideoLoop(timestamp) {
+        requestAnimationFrame(processVideoLoop);
+        if (timestamp - lastFrameTime < frameInterval) return;
         lastFrameTime = timestamp;
+
         if (video.readyState >= video.HAVE_CURRENT_DATA && !video.paused && !video.ended) {
+          // Canvas dimensions are set on 'loadedmetadata' to video's intrinsic size.
+          // Ensure they are still matching if video source changed without 'loadedmetadata' firing again
+          // (though 'load()' in switchVideo should trigger it).
+          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+                if (video.videoWidth > 0 && video.videoHeight > 0) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    console.log("Canvas DRAWING surface re-synced in loop.");
+                }
+            }
           if (canvas.width > 0 && canvas.height > 0) { 
             try { await faceMesh.send({ image: video }); } 
             catch (error) { console.error("Error sending frame to Face Mesh:", error); }
@@ -431,21 +460,16 @@
         }
       }
       
-      const playerResizeObserver = new ResizeObserver(entries => { 
-          for (let entry of entries) { 
-              if (entry.target === videoContainer) {
-                  requestAnimationFrame(setCanvasDimensions); 
-              }
-          }
-      });
-      playerResizeObserver.observe(videoContainer);
+      // No ResizeObserver specific to #container for this old method.
 
       video.addEventListener('canplay', () => {
+          // console.log("Video 'canplay' event fired.");
           if (!processingLoopStarted) {
-              requestAnimationFrame(processVideo); processingLoopStarted = true;
+              // console.log("Starting Face Mesh processing loop.");
+              requestAnimationFrame(processVideoLoop); processingLoopStarted = true;
           }
           video.play().catch(e => console.warn("Autoplay/Play prevented:", e.message));
-      }); 
+      }); // Removed once:true from new, as old version re-used it.
 
       const thumbs = gallery.querySelectorAll('.thumb');
       function switchVideo(selectedThumb) {
@@ -453,8 +477,11 @@
           thumbs.forEach(t => t.classList.remove('active'));
           selectedThumb.classList.add('active');
           const newVideoSrc = selectedThumb.getAttribute('data-video');
+          // console.log(`Switching main video to: ${newVideoSrc}`);
           video.pause(); processingLoopStarted = false; 
           video.src = newVideoSrc; video.load(); 
+          // 'loadedmetadata' on main video will handle canvas drawing surface resize.
+          // 'canplay' will restart processing loop.
       }
 
       thumbs.forEach(thumbDiv => {
@@ -464,7 +491,7 @@
                 if (thumbVideoEl.videoWidth > 0 && thumbVideoEl.videoHeight > 0) {
                     thumbDiv.style.aspectRatio = `${thumbVideoEl.videoWidth} / ${thumbVideoEl.videoHeight}`;
                 } else {
-                    thumbDiv.style.aspectRatio = '16 / 9'; 
+                    thumbDiv.style.aspectRatio = '16 / 9'; // Old default 150x100 was 3:2
                 }
             };
             thumbVideoEl.addEventListener('loadedmetadata', setThumbAR);
