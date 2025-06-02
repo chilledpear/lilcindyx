@@ -3,442 +3,409 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OnlyFangs - Interactive Experience</title>
+  <title>OnlyFangs - Interactive Video</title>
+
   <!-- Preload key resources -->
   <link rel="preload" href="bag.png" as="image">
+  <!-- Preload first video for faster initial load -->
   <link rel="preload" href="1.mp4" as="video" type="video/mp4">
-  <!-- Modern font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Loading Optimization: display=swap -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --accent-color: #ff6b6b;
-      --text-primary: #2d3748;
-      --text-secondary: #718096;
-      --text-light: rgba(255, 255, 255, 0.95);
-      --bg-glass: rgba(255, 255, 255, 0.1);
-      --bg-glass-strong: rgba(255, 255, 255, 0.15);
-      --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.12);
-      --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.15);
-      --border-radius: 16px;
-      --border-radius-lg: 24px;
+      --font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      
+      --color-text: #E0E0E0;
+      --color-text-dark: #212121;
+      --color-text-muted: #9E9E9E;
+
+      --color-bg-start: #1F2124; /* Darker gradient */
+      --color-bg-end: #303338;
+
+      --color-primary: #9C27B0; /* Purple accent */
+      --color-secondary: #E91E63; /* Pink accent */
+      --color-accent-bright: #FF4081; /* Original pink for highlights */
+      
+      --color-surface: rgba(255, 255, 255, 0.05); /* Subtle surface for cards/containers */
+      --color-surface-hover: rgba(255, 255, 255, 0.1);
+      --color-border: rgba(255, 255, 255, 0.1);
+
+      --border-radius-sm: 6px;
+      --border-radius-md: 10px;
+      --border-radius-lg: 16px;
+
+      --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+      --spacing-xs: 0.25rem; /* 4px */
+      --spacing-sm: 0.5rem;  /* 8px */
+      --spacing-md: 1rem;    /* 16px */
+      --spacing-lg: 1.5rem;  /* 24px */
+      --spacing-xl: 2rem;    /* 32px */
+
+      /* Responsive font sizes */
+      --font-size-sm: clamp(0.8rem, 0.17vw + 0.75rem, 0.9rem);
+      --font-size-base: clamp(1rem, 0.34vw + 0.9rem, 1.2rem);
+      --font-size-md: clamp(1.25rem, 0.5vw + 1.1rem, 1.5rem);
+      --font-size-lg: clamp(1.5rem, 1vw + 1.2rem, 2.25rem);
+      --font-size-xl: clamp(2rem, 2vw + 1.5rem, 3.5rem);
     }
 
-    * {
+    /* --- Base & Reset --- */
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
-      height: 100vh;
-      overflow-x: hidden;
-      overscroll-behavior: none;
+    html {
+      font-size: 100%; /* Base for rem units */
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--primary-gradient);
-      color: var(--text-primary);
+      font-family: var(--font-primary);
+      background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+      color: var(--color-text);
+      
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden; /* Prevent horizontal scroll on body */
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior-y: contain; /* Prevent bounce on scroll */
     }
 
-    /* Glassmorphism container */
-    .container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 1rem;
-      gap: 1.5rem;
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-      min-height: 100vh;
+    .visually-hidden { /* For accessibility, like screen reader only text */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    /* Header */
-    .header {
+    /* --- Layout Components --- */
+    .site-header, .site-footer {
+      flex-shrink: 0;
+      padding: var(--spacing-md) var(--spacing-lg);
       text-align: center;
-      margin-bottom: 1rem;
+      width: 100%;
     }
 
-    .logo {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff, #f8f9fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    /* Contract address card */
-    .contract-card {
-      background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--border-radius);
-      padding: 1rem;
-      box-shadow: var(--shadow-soft);
+    .site-main {
+      flex-grow: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      transition: all 0.3s ease;
-    }
-
-    .contract-card:hover {
-      background: var(--bg-glass-strong);
-      transform: translateY(-2px);
-    }
-
-    .address-text {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-light);
-      word-break: break-all;
-      text-align: center;
-    }
-
-    .copy-btn {
-      background: var(--secondary-gradient);
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      color: white;
-      font-weight: 500;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .copy-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .copy-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Main content area */
-    .main-content {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr auto;
-      gap: 1.5rem;
-      min-height: 0;
-    }
-
-    /* Toggle button */
-    .toggle-btn {
-      background: var(--bg-glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--border-radius);
-      padding: 1rem 2rem;
-      color: var(--text-light);
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-soft);
-      font-family: inherit;
-      justify-self: center;
-      text-align: center;
-    }
-
-    .toggle-btn:hover {
-      background: var(--bg-glass-strong);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-strong);
-    }
-
-    .toggle-btn:focus-visible {
-      outline: 2px solid var(--accent-color);
-      outline-offset: 3px;
-    }
-
-    /* Video container */
-    .video-container {
-      position: relative;
+      justify-content: center; /* Try to center content vertically if space allows */
+      gap: var(--spacing-lg);
+      padding: var(--spacing-md);
       width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 700px; /* Max content width for video player */
+      margin-left: auto;
+      margin-right: auto;
+      /* To attempt fitting on screen, child elements must be flexible */
+    }
+    
+    /* --- Typography --- */
+    .site-title {
+      font-size: var(--font-size-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    /* --- Contract Address --- */
+    .contract-info {
+      background: var(--color-surface);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-md);
+      margin: 0 auto var(--spacing-md) auto;
+      display: inline-flex; /* Changed to inline-flex for better alignment */
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+      max-width: 90%;
+      word-wrap: break-word;
+      border: 1px solid var(--color-border);
+    }
+    #copyButton {
+      cursor: pointer;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: background 0.2s, transform 0.1s;
+    }
+    #copyButton:hover {
+      background: color-mix(in srgb, var(--color-primary) 90%, black);
+    }
+    #copyButton:active {
+      transform: scale(0.95);
+    }
+    #copyButton:disabled {
+        background: var(--color-text-muted);
+        cursor: not-allowed;
+    }
+    #copyButton:focus-visible {
+        outline: 2px solid var(--color-accent-bright);
+        outline-offset: 2px;
+    }
+
+    /* --- Buttons --- */
+    .button {
+      display: inline-block;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      border: none;
+      font-family: inherit;
+      text-align: center;
+      text-decoration: none;
+    }
+    .button:hover {
+      background: color-mix(in srgb, var(--color-primary) 85%, black);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .button:active {
+      transform: translateY(0px) scale(0.98);
+      box-shadow: var(--shadow-sm);
+    }
+    .button:focus-visible {
+      outline: 3px solid var(--color-accent-bright);
+      outline-offset: 2px;
+    }
+
+    .bag-toggle-button {
+      background: var(--color-secondary); /* Different color for distinction */
+      font-size: var(--font-size-md);
+    }
+    .bag-toggle-button:hover {
+      background: color-mix(in srgb, var(--color-secondary) 85%, black);
+    }
+
+    .onlyfans-button {
+      background: var(--color-accent-bright);
+      font-size: var(--font-size-md);
+    }
+    .onlyfans-button:hover {
+      background: color-mix(in srgb, var(--color-accent-bright) 85%, black);
+    }
+
+    /* --- Video Player --- */
+    .video-player-section {
+      width: 100%;
+    }
+    #container { /* Video Container */
+      position: relative;
+      margin: 0 auto; /* Center it */
+      width: 100%; /* Take full width of its section */
+      max-width: 100%; /* Ensure it doesn't overflow section */
+      aspect-ratio: 16 / 9; /* Maintain aspect ratio, adjust if your videos differ */
+      background-color: #000; /* Fallback for video load */
+      border: 2px solid var(--color-border);
       border-radius: var(--border-radius-lg);
       overflow: hidden;
-      box-shadow: var(--shadow-strong);
-      background: rgba(0, 0, 0, 0.1);
-      aspect-ratio: 16/9;
+      box-shadow: var(--shadow-lg);
+      will-change: transform; /* Optimize for animations */
+      transform: translateZ(0); /* Force GPU acceleration */
     }
-
-    .video-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    #overlayCanvas {
+    #container video, #overlayCanvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      display: block;
+      object-fit: cover;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+    #overlayCanvas {
       cursor: default;
-      z-index: 2;
+      pointer-events: auto; /* Ensure canvas receives clicks */
     }
 
-    /* Gallery */
-    .gallery {
+    /* --- Gallery --- */
+    .gallery-section {
+        width: 100%;
+    }
+    #gallery {
       display: flex;
-      gap: 0.75rem;
-      overflow-x: auto;
-      padding: 0.5rem 0;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+      flex-wrap: nowrap; /* Force single line, horizontal scroll */
+      justify-content: flex-start; /* Align items to the start */
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm); /* Padding for scrollbar space and aesthetics */
+      overflow-x: auto; /* Enable horizontal scrolling */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: var(--color-primary) var(--color-surface); /* Firefox */
+      background: var(--color-surface);
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--color-border);
     }
-
-    .gallery::-webkit-scrollbar {
-      height: 6px;
+    /* Webkit scrollbar styling */
+    #gallery::-webkit-scrollbar {
+      height: 8px;
     }
-
-    .gallery::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 3px;
+    #gallery::-webkit-scrollbar-track {
+      background: var(--color-surface);
+      border-radius: var(--border-radius-sm);
     }
-
-    .gallery::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
-    }
-
-    .gallery::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.5);
+    #gallery::-webkit-scrollbar-thumb {
+      background-color: var(--color-primary);
+      border-radius: var(--border-radius-sm);
+      border: 2px solid var(--color-surface);
     }
 
     .thumb {
-      flex-shrink: 0;
-      width: 120px;
-      height: 80px;
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      /* Define aspect ratio for thumbnails for consistency */
+      aspect-ratio: 16 / 9; 
+      /* Height will determine width due to aspect-ratio and flex-shrink */
+      height: clamp(60px, 10vh, 100px); /* Responsive height */
+      flex-shrink: 0; /* Prevent shrinking so they maintain their width */
       border: 2px solid transparent;
-      background: var(--bg-glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--border-radius-sm);
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      background-color: #333; /* Placeholder bg */
       position: relative;
+      box-shadow: var(--shadow-sm);
     }
-
-    .thumb::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 2px;
-      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: xor;
-      -webkit-mask-composite: xor;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
     .thumb:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: var(--shadow-soft);
+      transform: scale(1.05);
+      box-shadow: var(--shadow-md);
     }
-
-    .thumb:hover::before {
-      opacity: 1;
-    }
-
     .thumb.active {
-      border-color: var(--accent-color);
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+      border-color: var(--color-accent-bright);
+      box-shadow: 0 0 10px var(--color-accent-bright);
+      transform: scale(1.05);
     }
-
     .thumb:focus-visible {
-      outline: 2px solid var(--accent-color);
-      outline-offset: 3px;
+      outline: 2px solid var(--color-accent-bright);
+      outline-offset: 2px;
+      transform: scale(1.05);
+      border-color: var(--color-accent-bright);
     }
-
     .thumb video {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
-      border-radius: inherit;
+      object-fit: cover;
     }
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 1rem 0;
+    /* --- Footer --- */
+    .site-footer {
+        padding-top: 0; /* Reduce top padding if main has bottom padding */
     }
 
-    .cta-btn {
-      display: inline-block;
-      text-decoration: none;
-      background: var(--secondary-gradient);
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: var(--border-radius);
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
 
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-strong);
-    }
-
-    .cta-btn:hover::before {
-      left: 100%;
-    }
-
-    .cta-btn:focus-visible {
-      outline: 2px solid var(--accent-color);
-      outline-offset: 3px;
-    }
-
-    /* Responsive design */
+    /* --- Mobile Adjustments (mostly for smaller screens, some overlap with clamp values) --- */
     @media (max-width: 768px) {
-      .container {
-        padding: 0.75rem;
-        gap: 1rem;
+      .site-main {
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm);
       }
-
-      .logo {
-        font-size: 2.5rem;
+      .site-header, .site-footer {
+        padding: var(--spacing-sm) var(--spacing-md);
       }
-
-      .contract-card {
-        padding: 0.75rem;
-        flex-direction: column;
-        gap: 0.5rem;
+      #contractAddressContainer {
+        max-width: 95%;
       }
-
-      .address-text {
-        font-size: 0.8rem;
-      }
-
-      .toggle-btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-      }
-
-      .video-container {
-        max-width: 100%;
-      }
-
       .thumb {
-        width: 100px;
-        height: 66px;
-      }
-
-      .cta-btn {
-        padding: 0.875rem 1.75rem;
-        font-size: 1rem;
+        height: clamp(50px, 8vh, 80px);
       }
     }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 0.5rem;
+      :root {
+        --spacing-lg: 1rem;
+        --spacing-xl: 1.5rem;
       }
-
-      .logo {
-        font-size: 2rem;
+      .site-title {
+        /* Font size already handled by clamp, could add specific override if needed */
       }
-
-      .thumb {
-        width: 90px;
-        height: 60px;
+      .button {
+        padding: calc(var(--spacing-sm) * 0.8) calc(var(--spacing-lg) * 0.8);
       }
-    }
-
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+      .contract-info {
+         /* font-size already handled by clamp */
+         padding: calc(var(--spacing-sm)*0.8) calc(var(--spacing-md)*0.8);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      #copyButton {
+        padding: calc(var(--spacing-xs)*0.8) calc(var(--spacing-sm)*0.8);
       }
     }
-
-    .container > * {
-      animation: fadeInUp 0.6s ease forwards;
+    
+    /* If viewport height is very small, make things even more compact */
+    @media (max-height: 600px) {
+        .site-main {
+            gap: var(--spacing-sm); /* Reduce gaps further */
+        }
+        .thumb {
+            height: clamp(40px, 7vh, 60px); /* Smaller thumbnails */
+        }
+        .button, .bag-toggle-button, .onlyfans-button {
+            /* Font sizes are clamped, padding can be reduced slightly */
+            padding-top: var(--spacing-xs);
+            padding-bottom: var(--spacing-xs);
+        }
     }
 
-    .container > *:nth-child(2) { animation-delay: 0.1s; }
-    .container > *:nth-child(3) { animation-delay: 0.2s; }
-    .container > *:nth-child(4) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <h1 class="logo">OnlyFangs</h1>
-      
-      <!-- Contract Address -->
-      <div class="contract-card">
-        <span class="address-text">Contract: <span id="addressValue">YOUR_ADDRESS_HERE</span></span>
-        <button id="copyButton" class="copy-btn" title="Copy Address">Copy</button>
-      </div>
+
+  <header class="site-header">
+    <h1 class="site-title">OnlyFangs</h1>
+    <div id="contractAddressContainer" class="contract-info">
+      Contract: <span id="addressValue">YOUR_ADDRESS_HERE</span>
+      <button id="copyButton" title="Copy Address">Copy</button>
     </div>
+  </header>
 
-    <!-- Main Content -->
-    <div class="main-content">
-      <!-- Toggle Button -->
-      <button id="bagToggle" type="button" class="toggle-btn">Click to remove the bag</button>
+  <main class="site-main">
+    <section class="controls-section">
+      <button id="bagToggle" type="button" class="button bag-toggle-button" aria-pressed="true">Click to remove the bag</button>
+    </section>
 
-      <!-- Video Container -->
-      <div class="video-container">
+    <section class="video-player-section">
+      <div id="container" class="video-container">
         <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
           <source src="1.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
         <canvas id="overlayCanvas"></canvas>
       </div>
+    </section>
 
-      <!-- Video Gallery -->
-      <div class="gallery">
+    <section class="gallery-section">
+      <h2 class="visually-hidden">Video Gallery</h2>
+      <div id="gallery" class="video-gallery">
         <div class="thumb active" data-video="1.mp4" tabindex="0">
           <video src="1.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
         </div>
@@ -461,62 +428,54 @@
           <video src="7.mp4" muted preload="metadata" playsinline webkit-playsinline loading="lazy"></video>
         </div>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <!-- Footer -->
-    <div class="footer">
-      <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="cta-btn">Visit Cindy's OnlyFans</a>
-    </div>
-  </div>
+  <footer class="site-footer">
+    <a href="https://onlyfans.com/lilcindybaby" target="_blank" class="button onlyfans-button">Cindy OF</a>
+  </footer>
 
-  <!-- Load MediaPipe Face Mesh and Drawing Utilities -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get references to DOM elements
       const video = document.getElementById('video');
       const canvas = document.getElementById('overlayCanvas');
-      const ctx = canvas.getContext('2d', { alpha: false });
+      const ctx = canvas.getContext('2d', { alpha: true }); // Keep alpha for transparent bag edges
       const bagToggle = document.getElementById('bagToggle');
       const copyButton = document.getElementById('copyButton');
       const addressValueSpan = document.getElementById('addressValue');
-      const gallery = document.querySelector('.gallery');
+      const gallery = document.getElementById('gallery');
+      const videoContainer = document.getElementById('container');
 
-      // Load the bag overlay image
       const bagImage = new Image();
       bagImage.src = 'bag.png';
-      bagImage.onload = () => {
-          console.log("Bag image loaded successfully.");
-      };
+      bagImage.onload = () => console.log("Bag image loaded successfully.");
       bagImage.onerror = () => {
           console.error("Error loading bag.png! Bag overlay will not work.");
+          // bagToggle.disabled = true;
+          // bagToggle.textContent = "Bag unavailable";
       };
 
-      // --- Global State ---
       let useBag = true;
       let bagRect = null;
       let processingLoopStarted = false;
 
-      // --- UI Update Functions ---
       function updateHeaderButton() {
         bagToggle.textContent = useBag ? "Click to remove the bag" : "Click to use the bag";
+        bagToggle.setAttribute('aria-pressed', useBag.toString());
       }
 
-      // --- Event Listeners ---
-
-      // Toggle bag via button
       bagToggle.addEventListener('click', () => {
         useBag = !useBag;
         updateHeaderButton();
         if (!useBag) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.cursor = 'default';
-            canvas.onmousemove = null;
+            if (canvas.onmousemove) canvas.onmousemove = null;
         }
       });
 
-      // Toggle bag via clicking on the bag itself on the canvas
       canvas.addEventListener('click', (e) => {
         if (useBag && bagRect &&
             e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
@@ -526,16 +485,17 @@
           if (!useBag) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.cursor = 'default';
-            canvas.onmousemove = null;
+            if (canvas.onmousemove) canvas.onmousemove = null;
           }
         }
       });
 
-      // Copy Contract Address
       copyButton.addEventListener('click', () => {
         const addressToCopy = addressValueSpan.textContent;
         if (!addressToCopy || addressToCopy === 'YOUR_ADDRESS_HERE') {
-            alert('Address not set.');
+            // Could provide visual feedback instead of alert
+            copyButton.textContent = 'Not Set!';
+            setTimeout(() => { copyButton.textContent = 'Copy'; }, 2000);
             return;
         }
         navigator.clipboard.writeText(addressToCopy).then(() => {
@@ -550,7 +510,7 @@
           try {
               const textArea = document.createElement("textarea");
               textArea.value = addressToCopy;
-              textArea.style.position = "fixed";
+              textArea.style.position = "fixed"; 
               textArea.style.left = "-9999px";
               document.body.appendChild(textArea);
               textArea.focus();
@@ -562,31 +522,43 @@
               setTimeout(() => { copyButton.textContent = 'Copy'; copyButton.disabled = false; }, 2000);
           } catch (execErr) {
               console.error('Fallback copy failed:', execErr);
-              alert('Could not copy address automatically. Please copy it manually.');
+              // Provide user feedback for manual copy
+              copyButton.textContent = 'Copy Failed';
+              setTimeout(() => { copyButton.textContent = 'Copy'; }, 3000);
           }
         });
       });
-
-      // Adjust canvas size when main video metadata loads
-      video.addEventListener('loadedmetadata', () => {
-        console.log("Main video metadata loaded. Adjusting canvas size.");
-        if (video.videoWidth > 0 && video.videoHeight > 0) {
-             canvas.width = video.videoWidth;
-             canvas.height = video.videoHeight;
+      
+      function setCanvasDimensions() {
+        // Use the video container's dimensions as it's styled with aspect-ratio
+        const containerWidth = videoContainer.clientWidth;
+        const containerHeight = videoContainer.clientHeight;
+        
+        if (containerWidth > 0 && containerHeight > 0) {
+            if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
+                canvas.width = containerWidth;
+                canvas.height = containerHeight;
+                console.log(`Canvas resized to: ${canvas.width}x${canvas.height}`);
+            }
         } else {
-            console.warn("Video dimensions reported as 0. Canvas size not set yet.");
+            console.warn("Video container dimensions are zero. Canvas not sized.");
         }
-      });
+      }
 
-      // Main video error handling
-       video.onerror = (e) => {
+      // Adjust canvas size when main video metadata loads AND on window resize
+      video.addEventListener('loadedmetadata', setCanvasDimensions);
+      window.addEventListener('resize', setCanvasDimensions);
+      // Initial set for safety, though video load might be primary trigger
+      setCanvasDimensions(); 
+
+
+      video.onerror = (e) => {
            console.error("Error loading main video:", video.error?.message || 'Unknown video error');
-       };
-       video.onstalled = () => {
+      };
+      video.onstalled = () => {
            console.warn("Main video stalled. Check network or video file.");
-       };
+      };
 
-      // --- MediaPipe Face Mesh Setup ---
       const faceMesh = new FaceMesh({
         locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
       });
@@ -598,7 +570,6 @@
         minTrackingConfidence: 0.5
       });
 
-      // Callback for when Face Mesh has results
       faceMesh.onResults(onResults);
 
       function onResults(results) {
@@ -608,22 +579,22 @@
          }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         bagRect = null;
-        let isHoveringBag = false;
 
         if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
           const landmarks = results.multiFaceLandmarks[0];
-          const videoWidth = canvas.width;
-          const videoHeight = canvas.height;
+          // Canvas dimensions are now authoritative for drawing
+          const viewWidth = canvas.width;
+          const viewHeight = canvas.height;
 
-          if (videoWidth === 0 || videoHeight === 0) {
+          if (viewWidth === 0 || viewHeight === 0) {
               console.warn("Canvas dimensions are zero, skipping bag calculation.");
               return;
           }
 
-          let minX = videoWidth, minY = videoHeight, maxX = 0, maxY = 0;
+          let minX = viewWidth, minY = viewHeight, maxX = 0, maxY = 0;
           for (const landmark of landmarks) {
-              const px = landmark.x * videoWidth;
-              const py = landmark.y * videoHeight;
+              const px = landmark.x * viewWidth;
+              const py = landmark.y * viewHeight;
               if (px < minX) minX = px;
               if (py < minY) minY = py;
               if (px > maxX) maxX = px;
@@ -659,63 +630,44 @@
              canvas.onmousemove = (e) => {
                  if (useBag && bagRect &&
                      e.offsetX >= bagRect.x && e.offsetX <= bagRect.x + bagRect.width &&
-                     e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height)
-                 {
-                    if (canvas.style.cursor !== 'pointer') {
-                         canvas.style.cursor = 'pointer';
-                     }
-                    isHoveringBag = true;
+                     e.offsetY >= bagRect.y && e.offsetY <= bagRect.y + bagRect.height) {
+                    if (canvas.style.cursor !== 'pointer') canvas.style.cursor = 'pointer';
                  } else {
-                     if (canvas.style.cursor !== 'default') {
-                         canvas.style.cursor = 'default';
-                     }
-                    isHoveringBag = false;
+                     if (canvas.style.cursor !== 'default') canvas.style.cursor = 'default';
                  }
              };
              canvas.onmouseleave = () => {
-                 if (canvas.style.cursor !== 'default') {
-                     canvas.style.cursor = 'default';
-                 }
-                 canvas.onmousemove = null;
+                 if (canvas.style.cursor !== 'default') canvas.style.cursor = 'default';
+                 // Don't nullify onmousemove here, could cause flicker if mouse re-enters quickly
              };
-
           } else {
-              if (canvas.style.cursor !== 'default') {
-                 canvas.style.cursor = 'default';
-              }
-              canvas.onmousemove = null;
-              canvas.onmouseleave = null;
+              if (canvas.style.cursor !== 'default') canvas.style.cursor = 'default';
+              if (canvas.onmousemove) canvas.onmousemove = null;
+              if (canvas.onmouseleave) canvas.onmouseleave = null;
           }
         } else {
-             if (canvas.style.cursor !== 'default') {
-               canvas.style.cursor = 'default';
-             }
-             canvas.onmousemove = null;
-             canvas.onmouseleave = null;
+             if (canvas.style.cursor !== 'default') canvas.style.cursor = 'default';
+             if (canvas.onmousemove) canvas.onmousemove = null;
+             if (canvas.onmouseleave) canvas.onmouseleave = null;
              bagRect = null;
         }
       }
 
-      // --- Video Processing Loop ---
       let lastFrameTime = 0;
       const targetFPS = 30;
       const frameInterval = 1000 / targetFPS;
 
       async function processVideo(timestamp) {
+        requestAnimationFrame(processVideo); // Schedule next frame immediately
+
         if (timestamp - lastFrameTime < frameInterval) {
-          requestAnimationFrame(processVideo);
-          return;
+          return; // Skip if not enough time has passed
         }
         lastFrameTime = timestamp;
 
         if (video.readyState >= video.HAVE_CURRENT_DATA && !video.paused && !video.ended) {
-          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-            if (video.videoWidth > 0 && video.videoHeight > 0) {
-              canvas.width = video.videoWidth;
-              canvas.height = video.videoHeight;
-            }
-          }
-
+          // Canvas dimensions should be up-to-date via resize observer or video load
+          // No need to resize canvas here every frame, it's expensive
           if (canvas.width > 0 && canvas.height > 0) {
             try {
               await faceMesh.send({ image: video });
@@ -724,26 +676,34 @@
             }
           }
         }
-        requestAnimationFrame(processVideo);
       }
+      
+      // ResizeObserver for the video container to keep canvas synced
+      const resizeObserver = new ResizeObserver(entries => {
+          for (let entry of entries) {
+              if (entry.target === videoContainer) {
+                  setCanvasDimensions();
+              }
+          }
+      });
+      resizeObserver.observe(videoContainer);
+
 
       video.addEventListener('canplay', () => {
           console.log("Video 'canplay' event fired.");
+          setCanvasDimensions(); // Ensure canvas is sized before starting processing
           if (!processingLoopStarted) {
               console.log("Starting Face Mesh processing loop.");
               requestAnimationFrame(processVideo);
               processingLoopStarted = true;
           }
-          video.play().catch(e => console.warn("Autoplay/Play after load prevented:", e));
-      }, { once: true });
+          video.play().catch(e => console.warn("Autoplay/Play after load prevented:", e.message));
+      }, { once: false }); // Allow this to fire for each new video source
 
-      // --- Gallery Selection Logic ---
       const thumbs = gallery.querySelectorAll('.thumb');
 
       function switchVideo(selectedThumb) {
-          if (!selectedThumb || selectedThumb.classList.contains('active')) {
-              return;
-          }
+          if (!selectedThumb || selectedThumb.classList.contains('active')) return;
 
           thumbs.forEach(t => t.classList.remove('active'));
           selectedThumb.classList.add('active');
@@ -752,47 +712,47 @@
           console.log(`Switching main video to: ${newVideoSrc}`);
 
           video.pause();
-          processingLoopStarted = false;
+          processingLoopStarted = false; // Will be set true again by 'canplay'
           video.src = newVideoSrc;
           video.load();
+          // The 'canplay' listener will handle play and restarting processing
       }
 
       thumbs.forEach(thumb => {
-        thumb.addEventListener('click', function() {
-          switchVideo(this);
-        });
+        thumb.addEventListener('click', function() { switchVideo(this); });
         thumb.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 switchVideo(this);
-                this.blur();
             }
         });
       });
 
-      // Optimize thumbnail loading
-      const observer = new IntersectionObserver((entries) => {
+      // IntersectionObserver for lazy loading thumbnail videos
+      // Only load video data when thumbnail is close to viewport
+      const thumbObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const video = entry.target.querySelector('video');
-            if (video) {
-              video.load();
-              observer.unobserve(entry.target);
+            const videoEl = entry.target.querySelector('video');
+            if (videoEl && videoEl.readyState < 1) { // HAVE_NOTHING or HAVE_METADATA (if preload=metadata worked)
+                // Only call load() if not already loading/loaded
+                // Browsers are usually good at this with preload="metadata"
+                // but explicit load can help in some cases or if preload is none.
+                // Forcing load might not be strictly necessary if preload="metadata" is reliable
+                // videoEl.load(); 
             }
+            // Once visible, no need to observe anymore for this purpose
+            // thumbObserver.unobserve(entry.target); // Keep observing if they can scroll out and back in
           }
         });
-      }, {
-        rootMargin: '50px 0px',
-        threshold: 0.1
-      });
+      }, { root: gallery, rootMargin: '0px 100px 0px 100px', threshold: 0.01 }); // Observe within gallery scroll
 
       document.querySelectorAll('.thumb').forEach(thumb => {
-        observer.observe(thumb);
+        thumbObserver.observe(thumb);
       });
 
-      // --- Initial Setup ---
       updateHeaderButton();
-      document.querySelectorAll('.gallery .thumb video').forEach(thumbVideo => {
+      document.querySelectorAll('#gallery .thumb video').forEach(thumbVideo => {
           thumbVideo.muted = true;
           thumbVideo.volume = 0;
       });
