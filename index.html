@@ -78,7 +78,7 @@
       max-width: 700px; 
       margin-left: auto;
       margin-right: auto;
-      overflow: hidden; 
+      overflow: hidden; /* Crucial for constraining flex children */
     }
     
     .site-title {
@@ -127,22 +127,12 @@
       flex-shrink: 0; 
     }
 
-    .video-player-outlet { 
-      flex: 1 1 auto;   
-      width: 100%;      
-      min-height: 0;    
-      display: flex;    
-      justify-content: center;
-      align-items: center;
-      position: relative; 
-      overflow: hidden;   
-    }
-
     #container { 
+      flex: 1 1 auto; 
+      min-height: 0;  
+      width: 100%;    
       position: relative; 
-      width: 100%;        
-      max-width: 100%;    
-      max-height: 100%;   
+      
       /* 'aspect-ratio' will be set by JS */
       background-color: #000; 
       border: 2px solid var(--color-border);
@@ -240,14 +230,12 @@
       <button id="bagToggle" type="button" class="button bag-toggle-button" aria-pressed="true">Click to remove the bag</button>
     </section>
 
-    <div class="video-player-outlet"> 
-      <div id="container" class="video-container">
-        <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
-          <source src="1.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <canvas id="overlayCanvas"></canvas>
-      </div>
+    <div id="container" class="video-container"> <!-- This is now a direct flex child of site-main -->
+      <video id="video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="auto">
+        <source src="1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <canvas id="overlayCanvas"></canvas>
     </div>
 
     <section class="gallery-section">
@@ -272,15 +260,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const video = document.getElementById('video'); // The <video> element itself
+      const video = document.getElementById('video'); 
       const canvas = document.getElementById('overlayCanvas');
       const ctx = canvas.getContext('2d', { alpha: true });
       const bagToggle = document.getElementById('bagToggle');
       const copyButton = document.getElementById('copyButton');
       const addressValueSpan = document.getElementById('addressValue');
       const gallery = document.getElementById('gallery');
-      // videoContainer is the div with id="container" that gets aspect-ratio set
-      const videoContainer = document.getElementById('container'); 
+      const videoContainer = document.getElementById('container'); // This is the div#container
 
       const bagImage = new Image();
       bagImage.src = 'bag.png';
@@ -345,7 +332,6 @@
       });
       
       function setCanvasDimensions() {
-        // videoContainer is the div#container
         const containerWidth = videoContainer.clientWidth;
         const containerHeight = videoContainer.clientHeight;
         
@@ -353,34 +339,26 @@
             if (canvas.width !== containerWidth || canvas.height !== containerHeight) {
                 canvas.width = containerWidth;
                 canvas.height = containerHeight;
-                console.log(`Canvas resized to: ${canvas.width}x${canvas.height} (matching div#container)`);
+                // console.log(`Canvas resized to: ${canvas.width}x${canvas.height} (matching div#container)`);
             }
         } else {
-            // This might happen if the container is not yet rendered or display:none
-            console.warn("div#container dimensions for canvas are zero. Canvas not sized yet.");
+            // console.warn("div#container dimensions for canvas are zero. Canvas not sized yet.");
         }
       }
 
-      // Listen to the <video> element for metadata
       video.addEventListener('loadedmetadata', function() {
-        console.log(`Main video metadata: ${this.videoWidth}x${this.videoHeight}`);
+        // console.log(`Main video metadata: ${this.videoWidth}x${this.videoHeight}`);
         if (this.videoWidth > 0 && this.videoHeight > 0) {
-            // Set aspect-ratio on the div#container
             videoContainer.style.aspectRatio = `${this.videoWidth} / ${this.videoHeight}`;
-            console.log(`div#container AR set to ${this.videoWidth}/${this.videoHeight}`);
+            // console.log(`div#container AR set to ${this.videoWidth}/${this.videoHeight}`);
         } else {
-            console.warn("Main video dimensions reported as zero. Using fallback AR for div#container.");
+            // console.warn("Main video dimensions reported as zero. Using fallback AR for div#container.");
             videoContainer.style.aspectRatio = '16 / 9'; 
         }
-        // DOM needs to reflow with the new aspect-ratio before canvas is sized.
-        // rAF helps wait for the next paint/layout cycle.
         requestAnimationFrame(setCanvasDimensions);
       });
 
       window.addEventListener('resize', () => {
-          // On resize, the CSS rules for .video-player-outlet and #container
-          // (especially max-height: 100%) should handle scaling.
-          // We just need to ensure canvas matches #container's final dimensions.
           requestAnimationFrame(setCanvasDimensions);
       });
       
@@ -446,19 +424,16 @@
         if (timestamp - lastFrameTime < frameInterval) return; 
         lastFrameTime = timestamp;
         if (video.readyState >= video.HAVE_CURRENT_DATA && !video.paused && !video.ended) {
-          if (canvas.width > 0 && canvas.height > 0) { // Ensure canvas is sized
-            try { await faceMesh.send({ image: video }); } // Send the <video> element
+          if (canvas.width > 0 && canvas.height > 0) { 
+            try { await faceMesh.send({ image: video }); } 
             catch (error) { console.error("Error sending frame to Face Mesh:", error); }
           }
         }
       }
       
-      // ResizeObserver on div#container to react if its computed size changes
-      // This is a fallback / secondary mechanism to window.resize
       const playerResizeObserver = new ResizeObserver(entries => { 
           for (let entry of entries) { 
               if (entry.target === videoContainer) {
-                  // console.log('div#container resized by observer, updating canvas');
                   requestAnimationFrame(setCanvasDimensions); 
               }
           }
@@ -466,10 +441,7 @@
       playerResizeObserver.observe(videoContainer);
 
       video.addEventListener('canplay', () => {
-          // console.log("Video 'canplay' event fired.");
-          // Aspect ratio is set on 'loadedmetadata'. Canvas syncs via rAF or ResizeObserver.
           if (!processingLoopStarted) {
-              console.log("Starting Face Mesh processing loop.");
               requestAnimationFrame(processVideo); processingLoopStarted = true;
           }
           video.play().catch(e => console.warn("Autoplay/Play prevented:", e.message));
@@ -481,10 +453,8 @@
           thumbs.forEach(t => t.classList.remove('active'));
           selectedThumb.classList.add('active');
           const newVideoSrc = selectedThumb.getAttribute('data-video');
-          console.log(`Switching main video to: ${newVideoSrc}`);
           video.pause(); processingLoopStarted = false; 
           video.src = newVideoSrc; video.load(); 
-          // 'loadedmetadata' on main video will handle AR and canvas for the new video
       }
 
       thumbs.forEach(thumbDiv => {
@@ -494,14 +464,12 @@
                 if (thumbVideoEl.videoWidth > 0 && thumbVideoEl.videoHeight > 0) {
                     thumbDiv.style.aspectRatio = `${thumbVideoEl.videoWidth} / ${thumbVideoEl.videoHeight}`;
                 } else {
-                    console.warn(`Thumb video ${thumbVideoEl.src} has zero dimensions. Fallback AR.`);
                     thumbDiv.style.aspectRatio = '16 / 9'; 
                 }
             };
             thumbVideoEl.addEventListener('loadedmetadata', setThumbAR);
-            if (thumbVideoEl.readyState >= 1) { setThumbAR(); } // If already loaded
+            if (thumbVideoEl.readyState >= 1) { setThumbAR(); }
              thumbVideoEl.addEventListener('error', () => {
-                console.error(`Error loading thumbnail video: ${thumbVideoEl.src}`);
                 thumbDiv.style.aspectRatio = '16 / 9'; thumbDiv.style.backgroundColor = '#222';
             });
         }
@@ -512,10 +480,7 @@
       updateHeaderButton(); 
       document.querySelectorAll('#gallery .thumb video').forEach(tv => { tv.muted = true; tv.volume = 0; });
       
-      // If main video metadata already loaded (e.g. from cache)
-      if (video.readyState >= 1) { // HAVE_METADATA or more
-        video.dispatchEvent(new Event('loadedmetadata'));
-      }
+      if (video.readyState >= 1) { video.dispatchEvent(new Event('loadedmetadata')); }
 
     });
   </script>
